@@ -94,7 +94,7 @@ async def variable(var):
 
 
 #@register(outgoing=True, pattern=r"^.usage(?: |$)")
-@register(outgoing=True, pattern=r"^.usage(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^.heroku(?: |$)(.*)")
 async def dyno_usage(dyno):
     """
         Get your account Dyno Usage
@@ -154,7 +154,7 @@ async def dyno_usage(dyno):
 
 CMD_HELP.update({
     "heroku":
-    ">.`usage`"
+    ">.`heroku`"
     "\nUsage: Check your heroku dyno hours remaining"
     "\n\n>`.set var <NEW VAR> <VALUE>`"
     "\nUsage: add new variable or update existing value variable"
