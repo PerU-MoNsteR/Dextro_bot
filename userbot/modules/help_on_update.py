@@ -28,7 +28,7 @@ async def usit(e):
     
     
 CMD_HELP.update({
-    "useit":
+    "useitoub":
     ".useitoub\
 \nUsage: Provide links to update repo guides while you keep your changes on the floor."
 })
