@@ -59,7 +59,7 @@ async def setlang(prog):
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
-@register(outgoing=True, pattern="^.carbon")
+@register(outgoing=True, pattern="^.crb")
 async def carbon_api(e):
     """ A Wrapper for carbon.now.sh """
     await e.edit("`Processing..`")
@@ -723,7 +723,7 @@ CMD_HELP.update({
 })
 CMD_HELP.update({
     'carbon':
-    '.carbon <text> [or reply]\
+    '.crb <text> [or reply]\
         \nUsage: Beautify your code using carbon.now.sh\nUse .crblang <text> to set language for your code.'
 })
 CMD_HELP.update(
