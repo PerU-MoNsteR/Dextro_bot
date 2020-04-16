@@ -615,7 +615,7 @@ async def get_admin(show):
     await show.edit(mentions, parse_mode="html")
 
 
-@register(outgoing=True, pattern="^.pin(?: |$)(.*)")
+@register(outgoing=True, pattern="^.pinme(?: |$)(.*)")
 async def pin(msg):
     """ For .pin command, pins the replied/tagged message on the top the chat. """
     # Admin or creator check
@@ -659,7 +659,7 @@ async def pin(msg):
             f"CHAT: {msg.chat.title}(`{msg.chat_id}`)\n"
             f"LOUD: {not is_silent}")
 
-@register(outgoing=True, pattern="^.cpin(?: |$)(.*)")
+@register(outgoing=True, pattern="^.cpinme(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -968,9 +968,9 @@ CMD_HELP.update({
 \nUsage: Retrieves a list of admins in the chat.\
 \n\n.bots\
 \nUsage: Retrieves a list of bots in the chat.\
-\n\n.pin <reply/tag>\
+\n\n.pinme <reply/tag>\
 \nUsage: pins the replied/tagged message on the top the chat silently.\
-\n\n.cpin <reply/tag>\
+\n\n.cpinme <reply/tag>\
 \nUsage: pins the replied/tagged message on the top the chat LOUDLY.\
 \n\n.users or .users <name of member>\
 \nUsage: Retrieves all (or queried) users in the chat.\
