@@ -622,7 +622,7 @@ WHERE = ["in the chest", "on the head", "on the butt", "on the crotch"]
 # ===========================================
 
 
-@register(outgoing=True, pattern=r"^.(\w+)say (.*)")
+@register(outgoing=True, pattern=r"^.(\w+)says (.*)")
 async def univsaye(cowmsg):
     """ For .cowsay module, userbot wrapper for cow which says things. """
     arg = cowmsg.pattern_match.group(1).lower()
@@ -1152,7 +1152,7 @@ async def typewriter(typew):
 
 CMD_HELP.update({
     "memes":
-    ".cowsay\
+    ".cowsays\
 \nUsage: cow which says things.\
 \n\n:/\
 \nUsage: Check yourself ;)\
