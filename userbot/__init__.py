@@ -109,6 +109,9 @@ LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
 
 # set blacklist_chats where you do not want userbot's features
 UB_BLACK_LIST_CHAT = os.environ.get("UB_BLACK_LIST_CHAT", "")
+
+# Telegraph 
+TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", None)
     
 # Anti Spambot Config
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
