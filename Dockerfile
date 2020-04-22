@@ -41,8 +41,7 @@ RUN apk add --no-cache=true --update \
     pv \
     jq \
     wget \
-    python \
-    python-dev \
+    freetype \
     freetype-dev \
     python3 \
     python3-dev \
