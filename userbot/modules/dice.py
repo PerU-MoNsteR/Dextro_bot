@@ -1,3 +1,5 @@
+#fix by @heyworld for OUB
+
 
 from telethon.tl.types import InputMediaDice
 #from uniborg.util import admin_cmd
@@ -21,3 +23,10 @@ async def _(event):
                 r = await event.reply(file=InputMediaDice())
         except:
             pass
+
+        
+CMD_HELP.update({
+    "dice":
+    ".dice\
+\nUsage: hahaha just a magic."
+})    
