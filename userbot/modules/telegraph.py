@@ -22,7 +22,7 @@ async def telegraph(event):
         return
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    await borg.send_message(
+    await bot.send_message(
         PRIVATE_GROUP_BOT_API_ID,
         "Created New Telegraph account {} for the current session. \n**Do not give this url to anyone, even if they say they are from Telegram!**".format(auth_url)
     )
@@ -32,7 +32,7 @@ async def telegraph(event):
         r_message = await event.get_reply_message()
         input_str = event.pattern_match.group(1)
         if input_str == "media":
-            downloaded_file_name = await borg.download_media(
+            downloaded_file_name = await bot.download_media(
                 r_message,
                 TEMP_DOWNLOAD_DIRECTORY
             )
@@ -53,7 +53,7 @@ async def telegraph(event):
                 os.remove(downloaded_file_name)
                 await event.edit("Uploaded to https://telegra.ph{} in {} seconds.".format(media_urls[0], (ms + ms_two)), link_preview=True)
         elif input_str == "text":
-            user_object = await borg.get_entity(r_message.from_id)
+            user_object = await bot.get_entity(r_message.from_id)
             title_of_page = user_object.first_name # + " " + user_object.last_name
             # apparently, all Users do not have last_name field
             if optional_title:
@@ -62,7 +62,7 @@ async def telegraph(event):
             if r_message.media:
                 if page_content != "":
                     title_of_page = page_content
-                downloaded_file_name = await borg.download_media(
+                downloaded_file_name = await bot.download_media(
                     r_message,
                     TEMP_DOWNLOAD_DIRECTORY
                 )
