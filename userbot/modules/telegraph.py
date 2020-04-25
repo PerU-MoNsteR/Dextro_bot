@@ -87,7 +87,7 @@ def resize_image(image):
 
 
 CMD_HELP.update({
-    'telegraph': '.tg media | text\
+    "telegraph": ".tg media | text\
         \nUsage: Upload text & media on Telegraph.\
-        \nNotice: you are required to set TELEGRAPH_SHORT_NAME in Heroku vars for'
+        \nNotice: you are required to set TELEGRAPH_SHORT_NAME in Heroku vars so that your bot remains alive."
 })
