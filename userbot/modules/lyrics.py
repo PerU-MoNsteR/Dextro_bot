@@ -90,7 +90,7 @@ async def pressf(f):
 
 CMD_HELP.update({
     "lyrics":
-    "**Usage:** .`lyric <artist name> - <song name>`\n"
+    "**Usage:** .`lyrics <artist name> - <song name>`\n"
     "__note__: **-** is neccessary when searching the lyrics to divided artist and song \n"
 "Genius lyrics plugin \n"
  "get this value from https://genius.com/developers \n"
