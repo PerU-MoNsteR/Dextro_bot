@@ -14,7 +14,7 @@ from userbot.events import register
 from userbot import CMD_HELP, LOGS, GENIUS
 
 
-@register(outgoing=True, pattern="^.lyrics1(?: |$)(.*)")
+@register(outgoing=True, pattern="^.lyric(?: |$)(.*)")
 async def lyrics(lyric):
     if r"-" in lyric.text:
         pass
@@ -90,7 +90,7 @@ async def pressf(f):
 
 CMD_HELP.update({
     "lyrics":
-    "**Usage:** .`lyrics1 <artist name> - <song name>`\n"
+    "**Usage:** .`lyric <artist name> - <song name>`\n"
     "__note__: **-** is neccessary when searching the lyrics to divided artist and song \n"
 "Genius lyrics plugin \n"
  "get this value from https://genius.com/developers \n"
