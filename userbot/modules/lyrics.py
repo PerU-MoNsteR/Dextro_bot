@@ -14,7 +14,7 @@ from userbot.events import register
 from userbot import CMD_HELP, LOGS, GENIUS
 
 
-@register(outgoing=True, pattern="^.lyric(?: |$)(.*)")
+@register(outgoing=True, pattern="^.lyrics(?: |$)(.*)")
 async def lyrics(lyric):
     if r"-" in lyric.text:
         pass
@@ -29,7 +29,7 @@ async def lyrics(lyric):
     else:
         genius = lyricsgenius.Genius(GENIUS)
         try:
-            args = lyric.text.split('.lyric')[1].split('-')
+            args = lyric.text.split('.lyrics')[1].split('-')
             artist = args[0].strip(' ')
             song = args[1].strip(' ')
         except Exception:
