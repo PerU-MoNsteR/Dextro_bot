@@ -77,7 +77,7 @@ async def bot_ver(event):
                              "`Revision: "
                              f"{revout}"
                              "` \n"
-                             "`Tagged version: v1.0`")
+                             "`OpenUserBot Version: 7.7.7`")
         else:
             await event.edit(
                 "Shame that you don't have Git, you're running v1.0 anyway!")
