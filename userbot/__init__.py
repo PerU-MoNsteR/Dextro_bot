@@ -55,7 +55,7 @@ API_KEY = os.environ.get("API_KEY", None)
 API_HASH = os.environ.get("API_HASH", None)
 
 # Photo Chat - Get this value from http://antiddos.systems
-API_TOKEN = os.environ.get("API_TOKEN", "15e05de0-0357-4553-b39c-d614443ed91e")
+API_TOKEN = os.environ.get("API_TOKEN", None)
 API_URL = os.environ.get("API_URL", "http://antiddos.systems")    
     
 # Userbot Session String
@@ -90,6 +90,7 @@ CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
+
 # For MONGO based DataBase
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 
