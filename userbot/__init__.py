@@ -10,7 +10,8 @@ import os
 from sys import version_info
 from logging import basicConfig, getLogger, INFO, DEBUG
 from distutils.util import strtobool as sb
-
+from pymongo import MongoClient
+from redis import StrictRedis
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
 from dotenv import load_dotenv
@@ -54,7 +55,7 @@ API_KEY = os.environ.get("API_KEY", None)
 API_HASH = os.environ.get("API_HASH", None)
 
 # Photo Chat - Get this value from http://antiddos.systems
-API_TOKEN = os.environ.get("API_TOKEN", "15e05de0-0357-4553-b39c-d614443ed91e")
+API_TOKEN = os.environ.get("API_TOKEN", None)
 API_URL = os.environ.get("API_URL", "http://antiddos.systems")    
     
 # Userbot Session String
@@ -89,6 +90,9 @@ CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
+
+# For MONGO based DataBase
+MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 
 # OCR API key
 OCR_SPACE_API_KEY = os.environ.get("OCR_SPACE_API_KEY", None)
@@ -160,8 +164,38 @@ GENIUS_API_TOKEN = os.environ.get("GENIUS", None)
 # Genius lyrics get this value from https://genius.com/developers both has same values
 GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 
+<<<<<<< HEAD
 # Quotes API Token
 QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
+=======
+
+# Init Mongo
+MONGOCLIENT = MongoClient(MONGO_DB_URI, 27017, serverSelectionTimeoutMS=1)
+MONGO = MONGOCLIENT.userbot
+
+
+def is_mongo_alive():
+    try:
+        MONGOCLIENT.server_info()
+    except BaseException:
+        return False
+    return True
+
+
+# Init Redis
+# Redis will be hosted inside the docker container that hosts the bot
+# We need redis for just caching, so we just leave it to non-persistent
+REDIS = StrictRedis(host='localhost', port=6379, db=0)
+
+
+def is_redis_alive():
+    try:
+        REDIS.ping()
+        return True
+    except BaseException:
+        return False
+
+>>>>>>> 82761a0451e2027bb6bac9869b910d4b5ce58b50
 
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
@@ -227,6 +261,7 @@ COUNT_MSG = 0
 USERS = {}
 COUNT_PM = {}
 LASTMSG = {}
+ENABLE_KILLME = True
 CMD_HELP = {}
 ISAFK = False
 AFKREASON = None

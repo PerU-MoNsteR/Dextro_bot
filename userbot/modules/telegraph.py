@@ -24,8 +24,8 @@ async def telegraphs(graph):
     if not graph.text[0].isalpha() and graph.text[0] not in ("/", "#", "@", "!"):
         if graph.fwd_from:
             return
-        if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
-            os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+        if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
+            os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
         if graph.reply_to_msg_id:
             start = datetime.now()
             r_message = await graph.get_reply_message()
@@ -33,7 +33,7 @@ async def telegraphs(graph):
             if input_str == "media":
                 downloaded_file_name = await bot.download_media(
                     r_message,
-                    TMP_DOWNLOAD_DIRECTORY
+                    TEMP_DOWNLOAD_DIRECTORY
                 )
                 end = datetime.now()
                 ms = (end - start).seconds
@@ -61,7 +61,7 @@ async def telegraphs(graph):
                         title_of_page = page_content
                     downloaded_file_name = await bot.download_media(
                         r_message,
-                        TMP_DOWNLOAD_DIRECTORY
+                        TEMP_DOWNLOAD_DIRECTORY
                     )
                     m_list = None
                     with open(downloaded_file_name, "rb") as fd:
@@ -87,7 +87,9 @@ def resize_image(image):
 
 
 CMD_HELP.update({
-    'telegraph': '.tg media | text\
+    "telegraph": ".tg media as reply to a media \
+        \n & .tg text as reply to a large text \
         \nUsage: Upload text & media on Telegraph.\
-        \nNotice: you are required to set TELEGRAPH_SHORT_NAME in Heroku vars for'
+        \nNotice: you are required to set TELEGRAPH_SHORT_NAME in Heroku vars so that your bot remains alive \
+        \nor else your bot will die."
 })
