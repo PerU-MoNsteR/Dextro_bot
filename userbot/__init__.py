@@ -164,10 +164,8 @@ GENIUS_API_TOKEN = os.environ.get("GENIUS", None)
 # Genius lyrics get this value from https://genius.com/developers both has same values
 GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 
-<<<<<<< HEAD
 # Quotes API Token
 QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
-=======
 
 # Init Mongo
 MONGOCLIENT = MongoClient(MONGO_DB_URI, 27017, serverSelectionTimeoutMS=1)
@@ -195,7 +193,6 @@ def is_redis_alive():
     except BaseException:
         return False
 
->>>>>>> 82761a0451e2027bb6bac9869b910d4b5ce58b50
 
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
