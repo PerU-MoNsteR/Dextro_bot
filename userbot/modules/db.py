@@ -13,7 +13,7 @@ from shutil import which
 
 from telethon import version
 
-from userbot import CMD_HELP, is_mongo_alive, is_redis_alive
+from userbot import CMD_HELP, is_mongo_alive, is_redis_alive, ALIVE_NAME
 from userbot.events import register
 
 # ================= CONSTANT =================
