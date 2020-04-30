@@ -253,7 +253,7 @@ async def afk_on_pm(sender):
             elif apprv and sender.sender_id in USERS:
                 if USERS[sender.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
-                        await sender.reply(f"My Master **{DEFAULTUSER}** Is **afk Because** {AFKREASON}.\
+                        await sender.reply(f"My Master **{DEFAULTUSER}** Is {AFKREASON}.\
                             \n**Since** `{afk_since}`")
                     else:
                         await sender.reply(f"My King 👑 {DEFAULTUSER} 👑 is **afk Since** {afk_since}.\nand My King has left a word for you only: \n{AFKSK}\n`.` ")
