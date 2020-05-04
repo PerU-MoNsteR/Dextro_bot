@@ -48,6 +48,8 @@ RUN apk add --no-cache=true --update \
     readline-dev \
     sqlite \
     ffmpeg \
+    w3m \
+    w3m-dev \
     libjpeg-turbo-dev \
     sqlite-dev \
     libc-dev \
