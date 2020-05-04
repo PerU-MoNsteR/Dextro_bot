@@ -132,6 +132,8 @@ ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 
+TERM_ALIAS = os.environ.get("TERM_ALIAS", "OUB")
+
 # Clean Welcome
 CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
 
