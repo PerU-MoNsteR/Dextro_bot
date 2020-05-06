@@ -77,6 +77,7 @@ RUN python3 -m ensurepip \
 
 RUN git clone -b sql-extended https://github.com/mkaraniya/OpenUserBot /root/userbot
 RUN mkdir /root/userbot/.bin
+WORKDIR /root/userbot/
 ENV PATH="/root/userbot/.bin:$PATH"
 WORKDIR /root/userbot/
 #
