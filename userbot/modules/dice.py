@@ -1,5 +1,5 @@
 #fix by @heyworld for OUB
-
+#bug fixed by @d3athwarrior
 
 from telethon.tl.types import InputMediaDice
 #from uniborg.util import admin_cmd
@@ -27,6 +27,6 @@ async def _(event):
         
 CMD_HELP.update({
     "dice":
-    ".dice\
+    ".dice or .dice 1 to 6 any value\
 \nUsage: hahaha just a magic."
 })    
