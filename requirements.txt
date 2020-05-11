@@ -64,3 +64,4 @@ pyfiglet
 jotquote
 csvfaker
 pymongo[srv]
+youtube_search
