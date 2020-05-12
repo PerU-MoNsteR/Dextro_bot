@@ -56,7 +56,7 @@ async def waifu(animu):
             await animu.answer("`No text given, hence the waifu ran away.`")
             return
 
-    animus = [1, 3, 7, 9, 13, 22, 34, 35, 36, 37, 43, 44, 45, 52, 53, 55]
+    animus = [1, 3, 4, 6, 7, 8, 10, 12, 13, 22, 28, 29, 30, 34, 35, 36, 37, 43, 44, 45, 47, 50, 51, 53, 54, 55, 61]
     
     sticcers = await bot.inline_query(
         "stickerizerbot", f"#{random.choice(animus)}{(deEmojify(text))}")
