@@ -1,0 +1,10 @@
+language: minimal
+
+dist: Focal Fossa
+
+script:
+  - bash init/Merge.sh
+
+branches:
+  only:
+  - sql-extended
