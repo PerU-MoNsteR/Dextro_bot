@@ -16,7 +16,7 @@ PARSE_ORIGIN="$(git config --get remote.origin.url)"
 COMMIT_POINT="$(git log --pretty=format:'%h : %s' -1)"
 COMMIT_HASH="$(git rev-parse --verify HEAD)"
 COMMIT_AUTHOR="$(git log -1 --format='%an <%ae>')"
-REVIEWERS="@zakaryan2004"
+REVIEWERS="@Mayur_Karaniya"
 LINT_ALLOWED_BRANCHES="staging"
 TELEGRAM_TOKEN=${BOT_API_KEY}
 export BOT_API_KEY PARSE_BRANCH PARSE_ORIGIN COMMIT_POINT TELEGRAM_TOKEN
@@ -45,7 +45,7 @@ tg_senderror() {
     fi
     tg_sendinfo "<code>Build Throwing Error(s)</code>" \
         "${REVIEWERS} please look in!" \
-        "Logs: https://semaphoreci.com/zakaryan2004/telegram-paperplane"
+        "Logs: https://github.com/mkaraniya/OpenUserBot"
 
     [ -n "${STATUS}" ] &&
     exit "${STATUS}" ||
@@ -56,8 +56,8 @@ lint() {
   if [ ! -z "$PULL_REQUEST_NUMBER" ]; then
     exit 0
   fi
-  git config --global user.email "zakaryan.2004@outlook.com"
-  git config --global user.name "Gegham Zakaryan"
+  git config --global user.email "mkaraniya@gmail.com"
+  git config --global user.name "mkaraniya"
 
 RESULT=`yapf -d -r -p userbot`
 
@@ -70,7 +70,7 @@ RESULT=`yapf -d -r -p userbot`
             git reset HEAD~1
             git add .
             git commit -m "[AUTO-LINT]: ${message}" --author="${COMMIT_AUTHOR}" --signoff
-            git remote set-url origin https://${GH_USERNAME}:${GH_PERSONAL_TOKEN}@github.com/RaphielGang/Telegram-Paperplane.git
+            git remote set-url origin https://${GH_USERNAME}:${GH_PERSONAL_TOKEN}@github.com/mkaraniya/OpenUserBot.git
             git push -f origin $PARSE_BRANCH
             tg_sendinfo "<code>Code has been linted and force pushed!</code>"
       else
