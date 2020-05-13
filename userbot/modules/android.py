@@ -8,7 +8,7 @@
 import re
 from requests import get
 from bs4 import BeautifulSoup
-
+import asyncio
 from userbot import CMD_HELP
 from userbot.events import register
 
