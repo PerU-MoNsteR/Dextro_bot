@@ -25,6 +25,7 @@ from urllib.error import HTTPError
 from telethon import events
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
+import urbandict
 from urbandict import define
 from requests import get
 from search_engine_parser import GoogleSearch
