@@ -10,6 +10,7 @@
 import os
 import time
 import asyncio
+import asyncurban
 import shutil
 from bs4 import BeautifulSoup
 import re
@@ -268,8 +269,7 @@ async def urban_dict(ud_e):
         if int(meanlen) >= 4096:
             await ud_e.edit("`Output too large, sending as file.`")
             file = open("output.txt", "w+")
-            file.write("Text: " + query + "\n\nMeaning: " + mean[0]["def"] +
-                       "\n\n" + "Example: \n" + mean[0]["example"])
+            file.write("Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(mean.word, mean.definition, mean.example))
             file.close()
             await ud_e.client.send_file(
                 ud_e.chat_id,
@@ -279,9 +279,7 @@ async def urban_dict(ud_e):
                 os.remove("output.txt")
             await ud_e.delete()
             return
-        await ud_e.edit("Text: **" + query + "**\n\nMeaning: **" +
-                        mean[0]["def"] + "**\n\n" + "Example: \n__" +
-                        mean[0]["example"] + "__")
+        await ud_e.edit("Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(mean.word, mean.definition, mean.example))
         if BOTLOG:
             await ud_e.client.send_message(
                 BOTLOG_CHATID,
