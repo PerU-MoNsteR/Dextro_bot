@@ -61,7 +61,6 @@ API_URL = os.environ.get("API_URL", "http://antiddos.systems")
     
 # Userbot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", None)
-SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get("SCREEN_SHOT_LAYER_ACCESS_KEY", None)
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", None))
 
