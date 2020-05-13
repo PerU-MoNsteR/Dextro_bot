@@ -69,7 +69,7 @@ async def device_info(request):
     await request.edit(reply)
 
 
-@register(outgoing=True, pattern=r"^.codename(?: |)([\S]*)(?: |)([\s\S]*)")
+@register(outgoing=True, pattern=r"^.codename(?: |$)(\S*)")
 async def codename_info(request):
     """ search for android codename """
     textx = await request.get_reply_message()
@@ -104,7 +104,7 @@ async def codename_info(request):
     await request.edit(reply)
 
 
-@register(outgoing=True, pattern=r"^.specs(?: |)([\S]*)(?: |)([\s\S]*)")
+@register(outgoing=True, pattern=r"^.specs(?: |$)(\S*)")
 async def devices_specifications(request):
     """ Mobile devices specifications """
     textx = await request.get_reply_message()
