@@ -465,10 +465,10 @@ PROSTR = [
 ]
 
 NUBSTR = [
-    "`Only few were Pro and you join the Party`",
-    "`Only few were Pro and you join the Party`",
-    "`Only few were Pro and you join the Party`",
-    "`Only few were Pro and you join the Party`",
+    "`Only few here were Pro and then you join the Party`",
+    "`Only few here were Pro and then you join the Party`",
+    "`Only few here were Pro and then you join the Party`",
+    "`Only few here were Pro and then you join the Party`",
 ]
 
 SHGS = [
