@@ -18,7 +18,7 @@ from userbot.events import register
 from userbot import SCREEN_SHOT_LAYER_ACCESS_KEY, CMD_HELP
 
 
-@register(pattern=r".ss (.*)", outgoing=True)
+@register(outgoing=True, pattern="^.ss$")
 async def _(event):
     if event.fwd_from:
         return
