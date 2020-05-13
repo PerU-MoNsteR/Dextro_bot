@@ -10,7 +10,6 @@
 import os
 import time
 import asyncio
-import asyncurban
 import shutil
 from bs4 import BeautifulSoup
 import re
