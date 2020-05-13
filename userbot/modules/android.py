@@ -93,7 +93,8 @@ async def codename_info(request):
     ]
     if results:
         reply = f"**Search results for {brand} {device}**:\n\n"
-        if len(results) > 8:
+        if len(results) > 
+8:
             results = results[:8]
         for item in results:
             reply += f"**Device**: {item['device']}\n" \
@@ -102,7 +103,6 @@ async def codename_info(request):
     else:
         reply = f"`Couldn't find {device} codename!`\n"
     await request.edit(reply)
-
 
 @register(outgoing=True, pattern=r"^.specs(?: |)([\S]*)(?: |)([\s\S]*)")
 async def devices_specifications(request):
