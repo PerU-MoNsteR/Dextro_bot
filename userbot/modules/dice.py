@@ -3,7 +3,7 @@
 
 from telethon.tl.types import InputMediaDice
 from userbot.events import register 
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, bot, ALIVE_NAME
+from userbot import CMD_HELP, bot
 
 
 
@@ -43,11 +43,13 @@ async def _(event):
 CMD_HELP.update({
     "dice":
     ".dice or .dice 1 to 6 any value\
-\nUsage: hahaha just a magic."
+\nUsage: hahaha just a magic.\
+\nwarning: `you would be in trouble if you input any other value than mentioned.`"
 })    
 
 CMD_HELP.update({
     "dart":
     ".dart or .dart 1 to 6 any value\
-\nUsage: hahaha just a magic."
+\nUsage: hahaha just a magic.\
+\nwarning: `you would be in trouble if you input any other value than mentioned.`"
 })    
