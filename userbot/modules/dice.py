@@ -39,7 +39,7 @@ async def _(event):
         except:
             pass        
 
-@register(outgoing=True, pattern="^.baskeball(?: |$)(.*)")
+@register(outgoing=True, pattern="^.basketball(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -64,8 +64,8 @@ CMD_HELP.update({
 })    
 
 CMD_HELP.update({
-    "baskeball":
-    ".baskeball or .baskeball 1 to 6 any value\
+    "basketball":
+    ".basketball or .basketball 1 to 6 any value\
 \nUsage: hahaha just a magic.\
 \nwarning: `you would be in trouble if you input any other value than mentioned.`"
 })    
