@@ -148,7 +148,7 @@
       "description": "Enter Your Client ID for Google Drive.",
       "required": false
     },
-    "GDRIVE_FOLDER": {
+    "GDRIVE_FOLDER_ID": {
             "description": "Google Drive upload folder.",
             "required": false
     },
