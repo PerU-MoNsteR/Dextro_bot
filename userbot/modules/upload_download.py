@@ -29,11 +29,12 @@ from pyDownload import Downloader
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 from telethon.tl.types import DocumentAttributeVideo, MessageMediaPhoto
-
-from userbot import LOGS, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, GDRIVE_FOLDER
+from userbot import GDRIVE_FOLDER_ID as GDRIVE_FOLDER
+from userbot import LOGS, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
 TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./")
+
 
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
