@@ -24,7 +24,9 @@ from urllib.error import HTTPError
 from telethon import events
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
+import urbandict
 from urbandict import define
+import asyncurban
 from requests import get
 from search_engine_parser import GoogleSearch
 from googleapiclient.discovery import build
@@ -263,7 +265,10 @@ async def _(event):
         await event.edit("Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(mean.word, mean.definition, mean.example))
     except asyncurban.WordNotFoundError:
         await event.edit("No result found for **" + word + "**")
+<<<<<<< HEAD
 
+=======
+>>>>>>> e9df1af1eb0d3611d912cb1c5fba4e3b6b1bd627
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
