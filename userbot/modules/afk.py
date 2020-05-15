@@ -4,6 +4,7 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 # All Credits to https://t.me/azrim89 for timestamp.
+# Offline / Online Credits to https://t.me/Devp73.
 
 """ Userbot module which contains afk-related commands """
 
@@ -171,11 +172,11 @@ async def mention_afk(mention):
                     wday = now + datetime.timedelta(days=-days)
                     afk_since = wday.strftime('%A')
             elif hours > 1:
-                afk_since = f"`{int(hours)}h {int(minutes)}m` **ago**"
+                afk_since = f"`{int(hours)}h {int(minutes)}m`"
             elif minutes > 0:
-                afk_since = f"`{int(minutes)}m {int(seconds)}s` **ago**"
+                afk_since = f"`{int(minutes)}m {int(seconds)}s`"
             else:
-                afk_since = f"`{int(seconds)}s` **ago**"
+                afk_since = f"`{int(seconds)}s`**"
             if mention.sender_id not in USERS:
                 if AFKREASON:
                     await mention.reply(f"My Master **{DEFAULTUSER}** Is **afk since** {afk_since}.\
@@ -248,11 +249,11 @@ async def afk_on_pm(sender):
                     wday = now + datetime.timedelta(days=-days)
                     afk_since = wday.strftime('%A')
             elif hours > 1:
-                afk_since = f"`{int(hours)}h {int(minutes)}m` **ago**"
+                afk_since = f"`{int(hours)}h {int(minutes)}m`"
             elif minutes > 0:
-                afk_since = f"`{int(minutes)}m {int(seconds)}s` **ago**"
+                afk_since = f"`{int(minutes)}m {int(seconds)}s`"
             else:
-                afk_since = f"`{int(seconds)}s` **ago**"
+                afk_since = f"`{int(seconds)}s`"
             if sender.sender_id not in USERS:
                 if AFKREASON:
                     await sender.reply(f"My Master **{DEFAULTUSER}** Is **afk since** {afk_since}.\
