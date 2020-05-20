@@ -4,7 +4,7 @@
 # Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 # All Credits to https://t.me/azrim89 for timestamp.
-# Offline / Online Credits to https://t.me/Devp73.
+# Offline / Online Credits to https://t.me/devpatel_73.
 
 """ Userbot module which contains afk-related commands """
 
