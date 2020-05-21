@@ -185,33 +185,23 @@ async def mention_afk(mention):
                 afk_since = f"`{int(seconds)}s`"
             if mention.sender_id not in USERS:
                 if AFKREASON:
-<<<<<<< HEAD
+
                     await mention.reply(f"My master **Ashwin** is **afk since** {afk_since}.\
                         \n**Because my master is** `{AFKREASON}`")
                 else:
                     await mention.reply(f"My master Ashwin is **afk Since** {afk_since}.\nand My King has left a word for you only: \n{AFKSK}\n`.` ")
-=======
-                    await mention.reply(f"My Master **{DEFAULTUSER}** Is still **afk since** {afk_since}.\
-                            \n**Because My Master is** `{AFKREASON}`")
-                else:
-                    await mention.reply(f"My Master 👑 {DEFAULTUSER} 👑 is **afk Since** {afk_since}.\nand My Master Has Left a Word for You Only: \n{AFKSK}\n`.` ")
->>>>>>> 509fc763e13e4f87963cb617d405350ad44c7c86
+
                 USERS.update({mention.sender_id: 1})
                 COUNT_MSG = COUNT_MSG + 1
             elif mention.sender_id in USERS:
                 if USERS[mention.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
-<<<<<<< HEAD
+
                         await mention.reply(f"My master **Ashwin** is **afk since** {afk_since}.\
                             \n**Because my master is** `{AFKREASON}`")
                     else:
                         await mention.reply(f"My master Ashwin is **afk Since** {afk_since}.\nand My King has left a word for you only: \n{AFKSK}\n`.` ")
-=======
-                        await mention.reply(f"My Master **{DEFAULTUSER}** Is still **afk since** {afk_since}.\
-                            \n**Because My Master is** `{AFKREASON}`")
-                    else:
-                        await mention.reply(f"My Master 👑 {DEFAULTUSER} 👑 is **afk Since** {afk_since}.\nand My Master Has Left a Word for You Only: \n{AFKSK}\n`.` ")
->>>>>>> 509fc763e13e4f87963cb617d405350ad44c7c86
+
                     USERS[mention.sender_id] = USERS[mention.sender_id] + 1
                     COUNT_MSG = COUNT_MSG + 1
                 else:
@@ -276,33 +266,23 @@ async def afk_on_pm(sender):
                 afk_since = f"`{int(seconds)}s`"
             if sender.sender_id not in USERS:
                 if AFKREASON:
-<<<<<<< HEAD
+
                     await sender.reply(f"My master **Ashwin** is **afk since** {afk_since}.\
                         \n**Because my master is** `{AFKREASON}`")
                 else:
                     await sender.replyf(f"My master Ashwin is **afk Since** {afk_since}.\nand My King has left a word for you only: \n{AFKSK}\n`.` ")
-=======
-                    await sender.reply(f"My Master **{DEFAULTUSER}** is **afk since** {afk_since}.\
-                        \n**Because My Master is** `{AFKREASON}`")
-                else:
-                    await sender.reply(f"My Master 👑 {DEFAULTUSER} 👑 is **afk Since** {afk_since}.\nand My Master Has Left a Word for You Only: \n{AFKSK}\n`.` ")
->>>>>>> 509fc763e13e4f87963cb617d405350ad44c7c86
+
                 USERS.update({sender.sender_id: 1})
                 COUNT_MSG = COUNT_MSG + 1
             elif apprv and sender.sender_id in USERS:
                 if USERS[sender.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
-<<<<<<< HEAD
+
                         await sender.reply(f"My master **Ashwin** is **afk since** {afk_since}.\
                             \n**Because my master is** `{AFKREASON}`")
                     else:
                         await sender.reply(f"My master Ashwin is **afk Since** {afk_since}.\nand My King has left a word for you only: \n{AFKSK}\n`.` ")
-=======
-                        await sender.reply(f"My Master **{DEFAULTUSER}** Is **still afk since** {afk_since}.\
-                            \n**Because My Master is** `{AFKREASON}`")
-                    else:
-                        await sender.reply(f"My Master 👑 {DEFAULTUSER} 👑 is **afk Since** {afk_since}.\nand My Master Has Left a Word for You Only: \n{AFKSK}\n`.` ")
->>>>>>> 509fc763e13e4f87963cb617d405350ad44c7c86
+
                     USERS[sender.sender_id] = USERS[sender.sender_id] + 1
                     COUNT_MSG = COUNT_MSG + 1
                 else:
