@@ -1,3 +1,4 @@
+wheel
 aiohttp
 aria2p
 async_generator
@@ -19,8 +20,12 @@ gTTS-token>=1.1.3
 hachoir>=3.0a5
 REPO_LINK
 heroku3>=3.4.0
+<<<<<<< HEAD
 httplib2==0.15.0
 asyncurban
+=======
+httplib2>=0.18.0
+>>>>>>> 509fc763e13e4f87963cb617d405350ad44c7c86
 psutil
 humanize
 lxml

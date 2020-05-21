@@ -156,7 +156,7 @@ async def terminal_runner(term):
         await term.edit("`That's a dangerous operation! Not Permitted!`")
         return
 
-    process = await asyncio.create_subprocess_exec(
+    process = await asyncio.create_subprocess_shell(
         command,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE)
@@ -177,7 +177,7 @@ async def terminal_runner(term):
         remove("output.txt")
         return
 
-    if uid == 0:
+    if uid is 0:
         await term.edit("`" f"{curruser}:~# {command}" f"\n{result}" "`")
     else:
         await term.edit("`" f"{curruser}:~$ {command}" f"\n{result}" "`")
