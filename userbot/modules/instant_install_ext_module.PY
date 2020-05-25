@@ -12,7 +12,8 @@ import traceback
 import os
 import userbot.utils
 
-@command(pattern="^.extdl", outgoing=True)
+#@command(pattern="^.extdl", outgoing=True)
+@register(outgoing=True, pattern="^.extdl")
 async def install(event):
     if event.fwd_from:
         return
