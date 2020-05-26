@@ -14,8 +14,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-#
-@register(outgoing=True, pattern=r"^.stats(?: |$)(.*)")
+#@register(outgoing=True, pattern=r"^.stats(?: |$)(.*)")
 
 
 
