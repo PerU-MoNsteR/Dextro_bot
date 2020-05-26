@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 #
-@register(outgoing=True, pattern=r"^.count(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^.stats(?: |$)(.*)")
 
 
 
