@@ -14,12 +14,12 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 logger = logging.getLogger(__name__)
 
 
-<<<<<<< HEAD
+
 #
 @register(outgoing=True, pattern=r"^.count(?: |$)(.*)")
-=======
-#@register(outgoing=True, pattern=r"^.stats(?: |$)(.*)")
->>>>>>> 08d271a458330784467c874e7d4d3bf6770a0b47
+
+
+
 
 
 
