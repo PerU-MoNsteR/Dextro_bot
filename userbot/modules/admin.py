@@ -1186,4 +1186,3 @@ CMD_HELP.update({
 \n\n`.setwarn` value.\
 \nUsage:sets warn limit."
 })
-})
