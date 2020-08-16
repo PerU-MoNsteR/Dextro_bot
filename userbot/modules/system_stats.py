@@ -13,7 +13,7 @@ from shutil import which
 from os import remove
 from telethon import version
 
-from userbot import CMD_HELP, ALIVE_NAME
+from userbot import CMD_HELP, ALIVE_NAME, ALIVE_LOGO, bot
 from userbot.events import register
 
 # ================= CONSTANT =================
@@ -132,18 +132,27 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
-    await alive.edit(
-                     "`i am ᗩᒪᓰᐺᘿ My 𝕄𝕒𝕤𝕥𝕖𝕣` \n"
-                     "`𝘪 𝙘𝙖𝙣'𝙩 Ðïê` \n"
-                     f"тєℓєтнση νєяѕιση: {version.__version__} \n"
-                     f"P̳y̳t̳h̳o̳n̳ ̳v̳e̳r̳s̳i̳o̳n̳: {python_version()} \n"
-                     f"------------------------------------ \n"
-                     f"ᗯEᗷᔕITE: 𝖍𝖙𝖙𝖕𝖘://𝖜𝖜𝖜.𝖋𝖆𝖈𝖊𝖇𝖔𝖔𝖐.𝖈𝖔𝖒/𝕿𝖊𝖐𝖓𝖔𝖜𝖆𝖞𝖘 \n"
-                     f"U̴̧̡̫̤̦̇͆͛̿͑̈́̂̊̚͝s̷̡͓͎͘e̷̹̙̝̽̾͂ŕ̴̡̛̺̖̝̬̣͖͕̐̅͌͂͌̕:: {DEFAULTUSER} \n"
-                     f"Mαιɳƚαιɳҽɾ: @🄼🄰🅈🅄🅁_🄺🄰🅁🄰🄽🄸🅈🄰 \n"
-                     f"🅰🅳🅼🅸🅽: `@𝓣𝓱𝓻𝓮𝓮_𝓒𝓾𝓫𝓮_𝓣𝓮𝓚𝓷𝓸𝔀𝓪𝔂𝓼` \n"
-                     f"U҉s҉e҉r҉b҉o҉t҉: @ₜₑₛₜing_bₒₜ "
-                     )    
+    logo = ALIVE_LOGO
+    output = ("`i am ᗩᒪᓰᐺᘿ My 𝕄𝕒𝕤𝕥𝕖𝕣` \n"
+              "`𝘪 𝙘𝙖𝙣'𝙩 Ðïê` \n"
+             f"тєℓєтнση νєяѕιση: {version.__version__} \n"
+             f"P̳y̳t̳h̳o̳n̳ ̳v̳e̳r̳s̳i̳o̳n̳: {python_version()} \n"
+             f"------------------------------------ \n"
+             f"ᗯEᗷᔕITE: 𝖍𝖙𝖙𝖕𝖘://𝖜𝖜𝖜.𝖋𝖆𝖈𝖊𝖇𝖔𝖔𝖐.𝖈𝖔𝖒/𝕿𝖊𝖐𝖓𝖔𝖜𝖆𝖞𝖘 \n"
+             f"U̴̧̡̫̤̦̇͆͛̿͑̈́̂̊̚͝s̷̡͓͎͘e̷̹̙̝̽̾͂ŕ̴̡̛̺̖̝̬̣͖͕̐̅͌͂͌̕:: {DEFAULTUSER} \n"
+             f"Mαιɳƚαιɳҽɾ: @🄼🄰🅈🅄🅁_🄺🄰🅁🄰🄽🄸🅈🄰 \n"
+             f"🅰🅳🅼🅸🅽: `@𝓣𝓱𝓻𝓮𝓮_𝓒𝓾𝓫𝓮_𝓣𝓮𝓚𝓷𝓸𝔀𝓪𝔂𝓼` \n"
+             f"U҉s҉e҉r҉b҉o҉t҉: @ₜₑₛₜing_bₒₜ ")
+    if ALIVE_LOGO:
+        try:
+            logo = ALIVE_LOGO
+            await bot.send_file(alive.chat_id, logo, caption=output)
+            await alive.delete()
+        except BaseException:
+            await alive.edit(output + "\n\n *`The provided logo is invalid."
+                             "\nMake sure the link is directed to the logo picture`")
+    else:
+        await alive.edit(output)                  
 
 
 

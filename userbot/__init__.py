@@ -96,6 +96,10 @@ CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
 
+# Default .alive logo
+ALIVE_LOGO = os.environ.get(
+    "ALIVE_LOGO") or "https://telegra.ph/file/e30939254c9ece5233ee0.jpg"  
+
 # For MONGO based DataBase
 MONGO_URI = os.environ.get("MONGO_URI", None)
 
