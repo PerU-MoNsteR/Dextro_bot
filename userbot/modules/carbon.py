@@ -35,7 +35,8 @@ from asyncio import sleep
 from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, YOUTUBE_API_KEY, CHROME_DRIVER, GOOGLE_CHROME_BIN, bot
 from userbot.events import register
 from telethon.tl.types import DocumentAttributeAudio
-from uniborg.util import progress, humanbytes, time_formatter, googleimagesdownload
+from uniborg.util import progress, humanbytes, time_formatter
+from userbot import google_images_download
 import subprocess
 from datetime import datetime
 
