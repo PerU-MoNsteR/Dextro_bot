@@ -11,11 +11,13 @@ from userbot.events import register
 from datetime import date
 import time
 import os
-from userbot import TEMP_DOWNLOAD_DIRECTORY, ZIP_DOWNLOAD_DIRECTORY, bot, CMD_HELP
+from userbot import TEMP_DOWNLOAD_DIRECTORY, bot, CMD_HELP
 from userbot.utils import progress
 
+#  ZIP_DOWNLOAD_DIRECTORY
 # ====================
 today = date.today()
+ZIP_DOWNLOAD_DIRECTORY = '/root/uniborg/zipdownload'
 # ====================
 
 
