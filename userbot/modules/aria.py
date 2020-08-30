@@ -5,7 +5,7 @@ from asyncio import sleep
 from subprocess import PIPE, Popen
 from userbot import LOGS, CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
-from userbot.utils import humanbytes
+from uniborg.util import humanbytes
 from requests import get
 
 
