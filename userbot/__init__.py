@@ -96,6 +96,10 @@ CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 # SQL Database URI
 DB_URI = os.environ.get("DATABASE_URL", None)
 
+# Default .alive logo
+ALIVE_LOGO = os.environ.get(
+    "ALIVE_LOGO") or "https://telegra.ph/file/e30939254c9ece5233ee0.jpg"  
+
 # For MONGO based DataBase
 MONGO_URI = os.environ.get("MONGO_URI", None)
 
@@ -128,6 +132,12 @@ ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 
 # Youtube API key
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
+
+# Inline bot 
+BOT_TOKEN = os.environ.get("BOT_TOKEN") or None
+BOT_USERNAME = os.environ.get("BOT_USERNAME") or None
+
+PRIVATE_CHANNEL_BOT_API_ID = int(os.environ.get("PRIVATE_CHANNEL_BOT_API_ID", -100123456789))
 
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
