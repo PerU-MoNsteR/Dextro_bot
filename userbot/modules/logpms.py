@@ -20,7 +20,7 @@ from userbot.events import register
 NO_PM_LOG_USERS = []
 
 #@borg.on(admin_cmd(incoming=True, func=lambda e: e.is_private))
-@register(incoming=True, disable_edited=True)
+@register(incoming=True, outgoing=True, disable_edited=True)
 async def monito_p_m_s(event):
     sender = await event.get_sender()
     if event.is_private and not (await event.get_sender()).bot:
@@ -35,6 +35,14 @@ async def monito_p_m_s(event):
                 )
             except Exception as e:
                 LOGS.warn(str(e))
+                
+        if event.chat_id and BOTLOG:
+                    await event.client.send_message(
+                        BOTLOG_CHATID,
+                        "#Forwarded\n" + "From " +
+                        f"[{chat.first_name}](tg://user?id={chat.id})",
+                    )
+
 
 #@borg.on(admin_cmd(pattern="nolog ?(.*)"))
 @register(pattern="^.nolog(?: |$)(.*)")
