@@ -36,9 +36,9 @@ async def monito_p_m_s(event):
             except Exception as e:
                 LOGS.warn(str(e))
                 
-        if event.chat_id and BOTLOG:
+        if event.chat_id and NC_LOG_P_M_S:
                     await event.client.send_message(
-                        BOTLOG_CHATID,
+                        PM_LOGGR_BOT_API_ID,
                         "#Forwarded\n" + "From " +
                         f"[{chat.first_name}](tg://user?id={chat.id})",
                     )
