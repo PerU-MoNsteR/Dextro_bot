@@ -41,8 +41,7 @@ async def capture(url):
         if link_match:
             link = link_match.group()
         else:
-            await url.edit("`I need a valid link to take screenshots from.`")
-            return
+            return await url.edit("`I need a valid link to take screenshots from.`")
     driver.get(link)
     height = driver.execute_script(
         "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
