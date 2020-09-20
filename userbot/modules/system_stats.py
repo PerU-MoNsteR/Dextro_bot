@@ -132,9 +132,8 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
-<<<<<<< HEAD
     await alive.edit(
-                     " 🤖Hey `I am alive Ashwin.`🤖\n"
+                     " 🤖Hey `I am alive .`🤖\n"
                      " \n"
                      f"📱Telethon version: {version.__version__} \n"
                      f"🐍Python: {python_version()} \n"
@@ -143,7 +142,7 @@ async def amireallyalive(alive):
                      " \n"
                      "🤖`It's OUB, I will never die.`🤖"
                      )    
-=======
+
     logo = ALIVE_LOGO
     output = ("`i am ᗩᒪᓰᐺᘿ My 𝕄𝕒𝕤𝕥𝕖𝕣` \n"
               "`𝘪 𝙘𝙖𝙣'𝙩 Ðïê` \n"
@@ -155,7 +154,8 @@ async def amireallyalive(alive):
              f"Mαιɳƚαιɳҽɾ: @🄼🄰🅈🅄🅁_🄺🄰🅁🄰🄽🄸🅈🄰 \n"
              f"🅰🅳🅼🅸🅽: `@𝓣𝓱𝓻𝓮𝓮_𝓒𝓾𝓫𝓮_𝓣𝓮𝓚𝓷𝓸𝔀𝓪𝔂𝓼` \n"
              f"U҉s҉e҉r҉b҉o҉t҉: @ₜₑₛₜing_bₒₜ ")
-    if ALIVE_LOGO:
+   
+if ALIVE_LOGO:
         try:
             logo = ALIVE_LOGO
             await bot.send_file(alive.chat_id, logo, caption=output)
@@ -165,8 +165,6 @@ async def amireallyalive(alive):
                              "\nMake sure the link is directed to the logo picture`")
     else:
         await alive.edit(output)                  
->>>>>>> 740abf4519c883fe626d0ba688b07075abb53933
-
 
 
 @register(outgoing=True, pattern="^.aliveu")
