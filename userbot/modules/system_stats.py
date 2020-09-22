@@ -18,6 +18,7 @@ from userbot.events import register
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
+logo = ALIVE_LOGO
 # ============================================
 
 
@@ -132,8 +133,9 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
-    logo = ALIVE_LOGO
-    output = ("`i am ᗩᒪᓰᐺᘿ My 𝕄𝕒𝕤𝕥𝕖𝕣` \n"
+    await alive.edit(
+               ALIVE_LOGO
+              "`i am ᗩᒪᓰᐺᘿ My 𝕄𝕒𝕤𝕥𝕖𝕣` \n"
               "`𝘪 𝙘𝙖𝙣'𝙩 Ðïê` \n"
              f"тєℓєтнση νєяѕιση: {version.__version__} \n"
              f"P̳y̳t̳h̳o̳n̳ ̳v̳e̳r̳s̳i̳o̳n̳: {python_version()} \n"
