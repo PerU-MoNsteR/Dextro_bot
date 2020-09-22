@@ -18,7 +18,6 @@ from userbot.events import register
 
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-logo = ALIVE_LOGO
 # ============================================
 
 
