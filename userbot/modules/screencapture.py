@@ -35,6 +35,7 @@ async def capture(url):
     if link_match:
         link = link_match.group()
     else:
+<<<<<<< HEAD
         prefix_str = 'https://'
         complete_link = (("{}{}").format(prefix_str, input_str))
         link_match = match(r'\bhttps?://.*\.\S+', complete_link)
@@ -42,6 +43,10 @@ async def capture(url):
             link = link_match.group()
         else:
             return await url.edit("`I need a valid link to take screenshots from.`")
+=======
+        await url.edit("`I need a valid link to take screenshots from.`")
+        return
+>>>>>>> c92c52f5762d4e7ece25b0344f9e620ffa11da0f
     driver.get(link)
     height = driver.execute_script(
         "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
