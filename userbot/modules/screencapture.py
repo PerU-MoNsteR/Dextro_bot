@@ -43,8 +43,6 @@ async def capture(url):
         else:
             return await url.edit("`I need a valid link to take screenshots from.`")
 
-        await url.edit("`I need a valid link to take screenshots from.`")
-        return
 
     driver.get(link)
     height = driver.execute_script(
