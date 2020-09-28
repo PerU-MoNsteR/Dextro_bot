@@ -30,20 +30,18 @@ async def monito_p_m_s(event):
                 e = await event.client.get_entity(int(PM_LOGGR_BOT_API_ID))
                 fwd_message = await event.client.forward_messages(
                     e,
-                    "#Chat\n" + "With " +
-                        f"[{chat.first_name}](tg://user?id={chat.id})",
                     event.message,
                     silent=True
                 )
             except Exception as e:
                 LOGS.warn(str(e))
                 
-     #   if event.chat_id and NC_LOG_P_M_S:
-     #               await event.client.send_message(
-     #                   PM_LOGGR_BOT_API_ID,
-     #                   "#Msged\n" + "To " +
-     #                   f"[{chat.first_name}](tg://user?id={chat.id})",
-      #              )
+        if event.chat_id and NC_LOG_P_M_S:
+                    await event.client.send_message(
+                        PM_LOGGR_BOT_API_ID,
+                        "#Msged\n" + "To " +
+                        f"[{chat.first_name}](tg://user?id={chat.id})",
+                    )
 
 
 #@borg.on(admin_cmd(pattern="nolog ?(.*)"))
