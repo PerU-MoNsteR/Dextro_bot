@@ -68,3 +68,4 @@ jotquote
 csvfaker
 pymongo[srv]
 youtube_search
+numpy
