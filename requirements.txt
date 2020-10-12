@@ -68,6 +68,6 @@ jotquote
 csvfaker
 pymongo[srv]
 youtube_search
-numpy
+numpy>=1.11.1
 colour
 geopy
