@@ -8,7 +8,7 @@ from os.path import exists, isdir
 
 from userbot import CMD_HELP
 from userbot.events import register
-from userbot.utils import humanbytes
+from uniborg.util import humanbytes
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
