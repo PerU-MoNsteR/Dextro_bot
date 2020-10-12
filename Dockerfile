@@ -55,7 +55,6 @@ RUN apk add --no-cache=true --update \
     sudo \
     chromium \
     chromium-chromedriver \
-    numpy \
     zlib-dev \
     jpeg 
     #
