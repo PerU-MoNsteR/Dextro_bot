@@ -70,3 +70,4 @@ pymongo[srv]
 youtube_search
 numpy
 colour
+geopy
