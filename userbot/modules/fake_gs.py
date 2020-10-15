@@ -1,3 +1,7 @@
+# Plugin By - XlayerCharon[XCB]
+# TG ~>>//@CharonCB21
+# Ported for OUB by @AshSTR (TG), ashwinstr (Github)
+
 import asyncio
 import os 
 from PIL import Image, ImageDraw, ImageFont
@@ -6,7 +10,7 @@ from wget import download
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
-from userbot.utils import googleimagesdownload
+from userbot import googleimagesdownload
 
 @register(outgoing=True, pattern="^.fgs ((.*) ; (.*))")
 async def FakeGoogleSearch(event):
@@ -29,8 +33,8 @@ async def FakeGoogleSearch(event):
     drawing=ImageDraw.Draw(photo)
     blue=(0,0,255)
     black=(0,0,0)
-    font1=ImageFont.truetype("userbot/utils/styles/ProductSans-BoldItalic.ttf",20)
-    font2=ImageFont.truetype("userbot/utils/styles/ProductSans-Light.ttf",23)
+    font1=ImageFont.truetype("fonts/ProductSans-BoldItalic.ttf",20)
+    font2=ImageFont.truetype("fonts/ProductSans-Light.ttf",23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
     photo.save("downloads/test.jpg")
