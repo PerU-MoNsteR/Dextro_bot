@@ -33,7 +33,7 @@ async def FakeGoogleSearch(event):
     drawing=ImageDraw.Draw(photo)
     blue=(0,0,255)
     black=(0,0,0)
-    font1=ImageFont.truetype("fonts/ProductSans-BoldItalic.ttf",20)
+    font1=ImageFont.truetype("fonts/ProductSans-BoldItalic.ttf",25)
     font2=ImageFont.truetype("fonts/ProductSans-Light.ttf",23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
@@ -42,7 +42,7 @@ async def FakeGoogleSearch(event):
     await event.delete()
     reply_id = event.pattern_match.group(3) if reply else None
     await event.client.send_file(
-        event.chat.id,
+        event.chat_id,
         'downloads/test.jpg',
         reply_to_message_id=reply_id)
     os.remove('downloads/test.jpg')
