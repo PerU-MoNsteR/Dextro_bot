@@ -13,7 +13,7 @@ from telethon.tl.types import MessageEntityMentionName
 from telethon.utils import get_input_location
 from telethon import events
 from telethon.tl import functions, types
-from userbot import NC_LOG_P_M_S, PM_LOGGR_BOT_API_ID, CMD_HELP, bot, TEMP_DOWNLOAD_DIRECTORY
+from userbot import NC_LOG_P_M_S, PM_LOGGR_BOT_API_ID, LOGS, CMD_HELP, bot, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
 
