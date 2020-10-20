@@ -5,12 +5,12 @@
 import asyncio
 import os 
 from PIL import Image, ImageDraw, ImageFont
-from telethon.tl.types import DocumentAttributeFilename
+#from telethon.tl.types import DocumentAttributeFilename
 from wget import download
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
-from userbot import google_images_download
+# from userbot import google_images_download
 
 @register(outgoing=True, pattern="^.fgs ((.*) ; (.*))")
 async def FakeGoogleSearch(event):
