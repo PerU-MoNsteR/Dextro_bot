@@ -1,0 +1,59 @@
+2020-10-25T09:18:29.667797+00:00 app[api]: Deploy 6a44e1ff by user mkaraniya@gmail.com
+2020-10-25T09:18:29.667797+00:00 app[api]: Release v643 created by user mkaraniya@gmail.com
+2020-10-25T09:18:30.223460+00:00 heroku[worker.1]: Restarting
+2020-10-25T09:18:30.579012+00:00 app[worker.1]: 2020-10-25 09:18:30,578 - telethon.client.downloads - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2020-10-25T09:18:31.235649+00:00 heroku[worker.1]: State changed from up to starting
+2020-10-25T09:18:31.500104+00:00 app[worker.1]: 2020-10-25 09:18:31,499 - telethon.client.uploads - INFO - Uploading file of 34840 bytes in 1 chunks of 131072
+2020-10-25T09:18:32.164051+00:00 heroku[worker.1]: Stopping all processes with SIGTERM
+2020-10-25T09:18:32.252563+00:00 heroku[worker.1]: Process exited with status 143
+2020-10-25T09:18:54.909703+00:00 heroku[worker.1]: Starting process with command `/bin/sh -c python3\ -m\ userbot`
+2020-10-25T09:18:55.612345+00:00 heroku[worker.1]: State changed from starting to up
+2020-10-25T09:19:01.238499+00:00 app[worker.1]: 2020-10-25 09:19:01,238 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.100:443/TcpFull...
+2020-10-25T09:19:01.487611+00:00 app[worker.1]: 2020-10-25 09:19:01,487 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.100:443/TcpFull complete!
+2020-10-25T09:19:02.800198+00:00 app[worker.1]: 2020-10-25 09:19:02,799 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.100:443/TcpFull...
+2020-10-25T09:19:02.801022+00:00 app[worker.1]: 2020-10-25 09:19:02,800 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.100:443/TcpFull complete!
+2020-10-25T09:19:02.813147+00:00 app[worker.1]: 2020-10-25 09:19:02,812 - userbot - INFO - Modules to load: ['admin', 'afk', 'all', 'android', 'anti_spambot', 'antiflood', 'ascii', 'bothubmodules', 'carbon', 'changelog', 'chat', 'chatinfo', 'covid', 'db', 'direct_links', 'dogbin', 'emojigames', 'evaluators', 'fake_gs', 'filter', 'follow', 'gdrive', 'github', 'gitupload', 'gps', 'hash', 'help', 'help_on_update', 'heroku', 'lastfm', 'list', 'listmyusernames', 'locks', 'logpms', 'lydia', 'lyrics', 'mega_downloader', 'memes', 'memify', 'misc', 'notes', 'ocr', 'openuserbot', 'pmmute', 'pmpermit', 'profile', 'purge', 'qrcode', 'quotly', 'remove_bg', 'reverse', 'scrapers', 'screencapture', 'sed', 'shalom', 'smd', 'snips', 'spam', 'stat', 'stickerchat', 'stickers', 'sticklet_un', 'system_stats', 'telegraph', 'testing', 'time', 'updater', 'upload_download', 'w3m', 'waifu', 'weather', 'welcomes', 'whois', 'www', 'zipfile']
+2020-10-25T09:19:02.813832+00:00 app[worker.1]: 2020-10-25 09:19:02,813 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.100:443/TcpFull...
+2020-10-25T09:19:03.059580+00:00 app[worker.1]: 2020-10-25 09:19:03,058 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.100:443/TcpFull complete!
+2020-10-25T09:19:06.873465+00:00 app[worker.1]: /root/userbot/userbot/modules/evaluators.py:180: SyntaxWarning: "is" with a literal. Did you mean "=="?
+2020-10-25T09:19:06.873474+00:00 app[worker.1]:   if uid is 0:
+2020-10-25T09:19:06.873474+00:00 app[worker.1]: 2020-10-25 09:19:06,873 - userbot - INFO - You are running OpenUserBot [v7.7.7]
+2020-10-25T09:19:06.873737+00:00 app[worker.1]: 2020-10-25 09:19:06,873 - userbot - INFO - 😘 Congratulations, your userbot is now running !! Test it by typing .ping in any chat 😘.Once died 😵, but now ON again 😉, A BIG thanks to https://github.com/Devp73 Dev Patel who have helped make this userbot ON AGAIN with his HUGE FIX!!for command list type .help & If you need assistance, head to https://t.me/PPE_Support
+2020-10-25T09:20:22.583109+00:00 app[worker.1]: 2020-10-25 09:20:22,582 - telethon.client.downloads - INFO - Starting direct file download in chunks of 131072 at 0, stride 131072
+2020-10-25T09:20:23.642449+00:00 app[worker.1]: 2020-10-25 09:20:23,642 - telethon.client.uploads - INFO - Uploading file of 34601 bytes in 1 chunks of 131072
+2020-10-25T09:20:25.178646+00:00 app[worker.1]: rm: cannot remove '*.webp': No such file or directory
+2020-10-25T09:20:25.238482+00:00 app[worker.1]: rm: cannot remove '*.mp4': No such file or directory
+2020-10-25T09:20:25.249299+00:00 app[worker.1]: rm: cannot remove '*.tgs': No such file or directory
+2020-10-25T09:20:26.281744+00:00 app[worker.1]: 2020-10-25 09:20:26,281 - userbot - WARNING - The specified message ID is invalid or you can't do that operation on such message (caused by ForwardMessagesRequest)
+2020-10-25T09:20:58.825064+00:00 app[worker.1]: 2020-10-25 09:20:58,818 - telethon.client.updates - ERROR - Unhandled exception on wrapper
+2020-10-25T09:20:58.825080+00:00 app[worker.1]: Traceback (most recent call last):
+2020-10-25T09:20:58.825081+00:00 app[worker.1]:   File "/root/userbot/userbot/events.py", line 90, in wrapper
+2020-10-25T09:20:58.825081+00:00 app[worker.1]:     await func(check)
+2020-10-25T09:20:58.825082+00:00 app[worker.1]:   File "/root/userbot/userbot/modules/fake_gs.py", line 40, in FakeGoogleSearch
+2020-10-25T09:20:58.825083+00:00 app[worker.1]:     photo.save("downloads/test.jpg")
+2020-10-25T09:20:58.825083+00:00 app[worker.1]:   File "/usr/lib/python3.8/site-packages/PIL/Image.py", line 2148, in save
+2020-10-25T09:20:58.825083+00:00 app[worker.1]:     fp = builtins.open(filename, "w+b")
+2020-10-25T09:20:58.825084+00:00 app[worker.1]: FileNotFoundError: [Errno 2] No such file or directory: 'downloads/test.jpg'
+2020-10-25T09:20:58.825084+00:00 app[worker.1]: 
+2020-10-25T09:20:58.825085+00:00 app[worker.1]: During handling of the above exception, another exception occurred:
+2020-10-25T09:20:58.825085+00:00 app[worker.1]: 
+2020-10-25T09:20:58.825085+00:00 app[worker.1]: Traceback (most recent call last):
+2020-10-25T09:20:58.825086+00:00 app[worker.1]:   File "/usr/lib/python3.8/site-packages/telethon/client/updates.py", line 446, in _dispatch_update
+2020-10-25T09:20:58.825087+00:00 app[worker.1]:     await callback(event)
+2020-10-25T09:20:58.825087+00:00 app[worker.1]:   File "/root/userbot/userbot/events.py", line 139, in wrapper
+2020-10-25T09:20:58.825088+00:00 app[worker.1]:     process = await asyncsubshell(command,
+2020-10-25T09:20:58.825088+00:00 app[worker.1]:   File "/usr/lib/python3.8/asyncio/subprocess.py", line 236, in create_subprocess_exec
+2020-10-25T09:20:58.825089+00:00 app[worker.1]:     transport, protocol = await loop.subprocess_exec(
+2020-10-25T09:20:58.825089+00:00 app[worker.1]:   File "/usr/lib/python3.8/asyncio/base_events.py", line 1630, in subprocess_exec
+2020-10-25T09:20:58.825089+00:00 app[worker.1]:     transport = await self._make_subprocess_transport(
+2020-10-25T09:20:58.825090+00:00 app[worker.1]:   File "/usr/lib/python3.8/asyncio/unix_events.py", line 197, in _make_subprocess_transport
+2020-10-25T09:20:58.825090+00:00 app[worker.1]:     transp = _UnixSubprocessTransport(self, protocol, args, shell,
+2020-10-25T09:20:58.825090+00:00 app[worker.1]:   File "/usr/lib/python3.8/asyncio/base_subprocess.py", line 36, in __init__
+2020-10-25T09:20:58.825091+00:00 app[worker.1]:     self._start(args=args, shell=shell, stdin=stdin, stdout=stdout,
+2020-10-25T09:20:58.825091+00:00 app[worker.1]:   File "/usr/lib/python3.8/asyncio/unix_events.py", line 789, in _start
+2020-10-25T09:20:58.825091+00:00 app[worker.1]:     self._proc = subprocess.Popen(
+2020-10-25T09:20:58.825092+00:00 app[worker.1]:   File "/usr/lib/python3.8/subprocess.py", line 854, in __init__
+2020-10-25T09:20:58.825092+00:00 app[worker.1]:     self._execute_child(args, executable, preexec_fn, close_fds,
+2020-10-25T09:20:58.825092+00:00 app[worker.1]:   File "/usr/lib/python3.8/subprocess.py", line 1702, in _execute_child
+2020-10-25T09:20:58.825093+00:00 app[worker.1]:     raise child_exception_type(errno_num, err_msg, err_filename)
+2020-10-25T09:20:58.825093+00:00 app[worker.1]: FileNotFoundError: [Errno 2] No such file or directory: 'git log --pretty=format:"%an: %s" -10'
