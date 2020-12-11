@@ -16,8 +16,8 @@ export BOT_API_KEY TELEGRAM_TOKEN
 tg_sendinfo "<code>I am gonna merge staging into sql-extended</code>"
 cd
 git clone https://github.com/PerU-MoNsteR/Dextro_bot.git
-cd OpenUserBot
-git remote set-url origin https://${GH_USERNAME}:${GH_PERSONAL_TOKEN}github.com/mkaraniya/OpenUserBot.git
+cd Dextro_bot
+git remote set-url origin https://${GH_USERNAME}:${GH_PERSONAL_TOKEN}github.com/mkaraniya/Dextro_bot.git
 git fetch
 git checkout staging
 git pull origin staging

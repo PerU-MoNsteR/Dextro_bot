@@ -78,7 +78,7 @@ async def bot_ver(event):
                              "`Revision: "
                              f"{revout}"
                              "` \n"
-                             "`OpenUserBot Version: 7.7.7`")
+                             "`Dextro_bot Version: 7.7.7`")
         else:
             await event.edit(
                 "Shame that you don't have Git, you're running v1.0 anyway!")

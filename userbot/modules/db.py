@@ -35,7 +35,7 @@ async def amireallydbs(dbs):
     await dbs.edit("`"
                      f"User: {DEFAULTUSER} \n"
                      f"Database status: {db}\n"
-                     f"OpenUserBot Version: v7.7.7"
+                     f"Dextro_bot Version: v7.7.7"
                      "`")
                      
                      

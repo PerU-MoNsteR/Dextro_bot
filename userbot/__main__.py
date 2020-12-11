@@ -26,7 +26,7 @@ except PhoneNumberInvalidError:
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
-LOGS.info("You are running OpenUserBot [v7.7.7]")
+LOGS.info("You are running Dextro_bot [v7.7.7]")
 
 LOGS.info(
     "😘 Congratulations, your userbot is now running !! Test it by typing .ping in any chat 😘."
