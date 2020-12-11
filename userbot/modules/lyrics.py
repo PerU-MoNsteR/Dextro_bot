@@ -4,14 +4,13 @@
 # you may not use this file except in compliance with the License.
 
 
-
-
 import os
-import lyricsgenius
 import random
 
+import lyricsgenius
+
+from userbot import CMD_HELP, GENIUS, LOGS
 from userbot.events import register
-from userbot import CMD_HELP, LOGS, GENIUS
 
 
 @register(outgoing=True, pattern="^.lyrics(?: |$)(.*)")
@@ -19,19 +18,22 @@ async def lyrics(lyric):
     if r"-" in lyric.text:
         pass
     else:
-        await lyric.edit("`Error: please use '-' as divider for <artist> and <song>`\n"
-                         "eg: `Nicki Minaj - Super Bass`")
+        await lyric.edit(
+            "`Error: please use '-' as divider for <artist> and <song>`\n"
+            "eg: `Nicki Minaj - Super Bass`"
+        )
         return
 
     if GENIUS is None:
         await lyric.edit(
-            "`Provide genius access token to config.py or Heroku Var first kthxbye!`")
+            "`Provide genius access token to config.py or Heroku Var first kthxbye!`"
+        )
     else:
         genius = lyricsgenius.Genius(GENIUS)
         try:
-            args = lyric.text.split('.lyrics')[1].split('-')
-            artist = args[0].strip(' ')
-            song = args[1].strip(' ')
+            args = lyric.text.split(".lyrics")[1].split("-")
+            artist = args[0].strip(" ")
+            song = args[1].strip(" ")
         except Exception:
             await lyric.edit("`LMAO please provide artist and song names`")
             return
@@ -58,10 +60,12 @@ async def lyrics(lyric):
             lyric.chat_id,
             "lyrics.txt",
             reply_to=lyric.id,
-            )
+        )
         os.remove("lyrics.txt")
     else:
-        await lyric.edit(f"**Search query**: \n`{artist} - {song}`\n\n```{songs.lyrics}```")
+        await lyric.edit(
+            f"**Search query**: \n`{artist} - {song}`\n\n```{songs.lyrics}```"
+        )
     return
 
 
@@ -69,7 +73,7 @@ async def lyrics(lyric):
 async def pressf(f):
     """Pays respects"""
     args = f.text.split()
-    arg = (f.text.split(' ', 1))[1] if len(args) > 1 else None
+    arg = (f.text.split(" ", 1))[1] if len(args) > 1 else None
     if len(args) == 1:
         r = random.randint(0, 3)
         LOGS.info(r)
@@ -88,15 +92,14 @@ async def pressf(f):
         await f.edit("`" + out + "`")
 
 
-CMD_HELP.update({
-    "lyrics":
-    "**Usage:** .`lyrics <artist name> - <song name>`\n"
-    "__note__: **-** is neccessary when searching the lyrics to divided artist and song \n"
-"Genius lyrics plugin \n"
- "get this value from https://genius.com/developers \n"
-
-"Add:-  GENIUS_API_TOKEN and token value in heroku app settings \n"
-  "   & GENIUS and token value in heroku app settings \n"
-
-"Lyrics Plugin Syntax: .lyrics <aritst name - song nane>"
-})
+CMD_HELP.update(
+    {
+        "lyrics": "**Usage:** .`lyrics <artist name> - <song name>`\n"
+        "__note__: **-** is neccessary when searching the lyrics to divided artist and song \n"
+        "Genius lyrics plugin \n"
+        "get this value from https://genius.com/developers \n"
+        "Add:-  GENIUS_API_TOKEN and token value in heroku app settings \n"
+        "   & GENIUS and token value in heroku app settings \n"
+        "Lyrics Plugin Syntax: .lyrics <aritst name - song nane>"
+    }
+)

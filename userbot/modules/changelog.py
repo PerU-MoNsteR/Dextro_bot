@@ -7,26 +7,28 @@
 This module updates the userbot based on chtream revision
 """
 
-from os import remove, execl
 import sys
+from os import execl, remove
 
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 
-from userbot import CMD_HELP, bot, HEROKU_MEMEZ, HEROKU_API_KEY, HEROKU_APP_NAME
+from userbot import CMD_HELP, bot
 from userbot.events import register
 
 
 async def gen_chlog(repo, diff):
-    ch_log = ''
+    ch_log = ""
     d_form = "%d/%m/%y"
     for c in repo.iter_commits(diff):
-        ch_log += f'•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n'
+        ch_log += (
+            f"•[{c.committed_datetime.strftime(d_form)}]: {c.summary} <{c.author}>\n"
+        )
     return ch_log
 
 
 async def is_off_br(br):
-    off_br = ['sql-extended']
+    off_br = ["sql-extended"]
     for k in off_br:
         if k == br:
             return 1
@@ -38,16 +40,16 @@ async def chtream(ch):
     "For .update command, check if the bot is up to date, update if specified"
     await ch.edit("`Checking for updates, please wait....`")
     conf = ch.pattern_match.group(1).lower()
-    off_repo = 'https://github.com/PerU-MoNsteR/Dextro_bot.git'
+    off_repo = "https://github.com/PerU-MoNsteR/Dextro_bot.git"
 
     try:
         txt = "`Oops.. Updater cannot continue due to some problems occured`\n\n**LOGTRACE:**\n"
         repo = Repo()
     except NoSuchPathError as error:
-        await ch.edit(f'{txt}\n`directory {error} is not found`')
+        await ch.edit(f"{txt}\n`directory {error} is not found`")
         return
     except GitCommandError as error:
-        await ch.edit(f'{txt}\n`Early failure! {error}`')
+        await ch.edit(f"{txt}\n`Early failure! {error}`")
         return
     except InvalidGitRepositoryError:
         repo = Repo.init()
@@ -55,34 +57,37 @@ async def chtream(ch):
             "`Warning: Force-Syncing to the latest stable code from repo.`\
             \nI may lose my downloaded files during this update."
         )
-        origin = repo.create_remote('chtream', off_repo)
+        origin = repo.create_remote("chtream", off_repo)
         origin.fetch()
-        repo.create_head('sql-extended', origin.refs.sql-extended)
-        repo.heads.sql-extended.checkout(True)
+        repo.create_head("sql-extended", origin.refs.sql - extended)
+        repo.heads.sql - extended.checkout(True)
 
     ac_br = repo.active_branch.name
     if not await is_off_br(ac_br):
         await ch.edit(
-            f'**[UPDATER]:**` Looks like you are using your own custom branch ({ac_br}). \
+            f"**[UPDATER]:**` Looks like you are using your own custom branch ({ac_br}). \
             in that case, Updater is unable to identify which branch is to be merged. \
-            please checkout to any official branch`')
+            please checkout to any official branch`"
+        )
         return
 
     try:
-        repo.create_remote('chtream', off_repo)
+        repo.create_remote("chtream", off_repo)
     except BaseException:
         pass
 
-    ch_rem = repo.remote('chtream')
+    ch_rem = repo.remote("chtream")
     ch_rem.fetch(ac_br)
-    changelog = await gen_chlog(repo, f'HEAD..chtream/{ac_br}')
+    changelog = await gen_chlog(repo, f"HEAD..chtream/{ac_br}")
 
     if not changelog:
-        await ch.edit(f'\n`Your BOT is` **up-to-date** `with` **{ac_br}**\n')
+        await ch.edit(f"\n`Your BOT is` **up-to-date** `with` **{ac_br}**\n")
         return
 
     if conf != "w":
-        changelog_str = f'**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`'
+        changelog_str = (
+            f"**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`"
+        )
         if len(changelog_str) > 4096:
             await ch.edit("`Changelog is too big, sending it as a file.`")
             file = open("output.txt", "w+")
@@ -96,14 +101,12 @@ async def chtream(ch):
             remove("output.txt")
         else:
             await ch.edit(changelog_str)
-        await ch.respond(
-            "`do \".update \" to update\nif using Heroku`")
+        await ch.respond('`do ".update " to update\nif using Heroku`')
         return
 
-    await ch.edit('`New update found, updating...`')
+    await ch.edit("`New update found, updating...`")
     ch_rem.fetch(ac_br)
-    await ch.edit('`Successfully Updated!\n'
-                   'Bot is restarting... Wait for a second!`')
+    await ch.edit("`Successfully Updated!\n" "Bot is restarting... Wait for a second!`")
     await install_requirements()
     await bot.disconnect()
     # Spin a new instance of bot
@@ -112,10 +115,11 @@ async def chtream(ch):
     exit()
 
 
-CMD_HELP.update({
-    'update':
-    ".chl\
+CMD_HELP.update(
+    {
+        "update": ".chl\
 \nUsage: Checks if the main userbot repository has any updates and shows a changelog if so.\
 \n\n.update\
 \nUsage: Updates your userbot, if there are any updates in the main userbot repository."
-})
+    }
+)

@@ -7,54 +7,64 @@
 #
 """ Userbot module containing various scrapers. """
 
-import os
-import time
 import asyncio
-import shutil
-from bs4 import BeautifulSoup
+import os
 import re
-from time import sleep
+import shutil
+import subprocess
+import time
+from asyncio import sleep
+from datetime import datetime
 from html import unescape
 from re import findall
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
+from time import sleep
 from urllib.parse import quote_plus
-from urllib.error import HTTPError
-from telethon import events
-from wikipedia import summary
-from wikipedia.exceptions import DisambiguationError, PageError
-import urbandict
-from urbandict import define
+
 import asyncurban
-from requests import get
-from search_engine_parser import GoogleSearch
+from bs4 import BeautifulSoup
+from emoji import get_emoji_regexp
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googletrans import LANGUAGES, Translator
-from gtts import gTTS, gTTSError
+from gtts import gTTS
 from gtts.lang import tts_langs
-from emoji import get_emoji_regexp
-from youtube_dl import YoutubeDL
-from youtube_dl.utils import (DownloadError, ContentTooShortError,
-                              ExtractorError, GeoRestrictedError,
-                              MaxDownloadsReached, PostProcessingError,
-                              UnavailableVideoError, XAttrMetadataError)
-from asyncio import sleep
-from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, YOUTUBE_API_KEY, CHROME_DRIVER, GOOGLE_CHROME_BIN, bot
-from userbot.events import register
+from requests import get
+from search_engine_parser import GoogleSearch
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from telethon.tl.types import DocumentAttributeAudio
-from userbot.modules.upload_download import progress, humanbytes, time_formatter
-from userbot.google_images_download import googleimagesdownload
-import subprocess
-from datetime import datetime
-import asyncurban
+from wikipedia import summary
+from wikipedia.exceptions import DisambiguationError, PageError
+from youtube_dl import YoutubeDL
+from youtube_dl.utils import (
+    ContentTooShortError,
+    DownloadError,
+    ExtractorError,
+    GeoRestrictedError,
+    MaxDownloadsReached,
+    PostProcessingError,
+    UnavailableVideoError,
+    XAttrMetadataError,
+)
 
+from userbot import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    CHROME_DRIVER,
+    CMD_HELP,
+    GOOGLE_CHROME_BIN,
+    YOUTUBE_API_KEY,
+    bot,
+)
+from userbot.events import register
+from userbot.google_images_download import googleimagesdownload
+from userbot.modules.upload_download import progress
 
 CARBONLANG = "auto"
 TTS_LANG = "en"
 TRT_LANG = "en"
 TEMP_DOWNLOAD_DIRECTORY = "/root/userbot/.bin"
+
 
 @register(outgoing=True, pattern="^.crblang (.*)")
 async def setlang(prog):
@@ -62,11 +72,12 @@ async def setlang(prog):
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
+
 @register(outgoing=True, pattern="^.crb")
 async def carbon_api(e):
     """ A Wrapper for carbon.now.sh """
     await e.edit("`Processing..`")
-    CARBON = 'https://carbon.now.sh/?l={lang}&code={code}'
+    CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
     global CARBONLANG
     textx = await e.get_reply_message()
     pcode = e.text
@@ -86,32 +97,30 @@ async def carbon_api(e):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-gpu")
-    prefs = {'download.default_directory': '/root/userbot/.bin'}
-    chrome_options.add_experimental_option('prefs', prefs)
-    driver = webdriver.Chrome(executable_path=CHROME_DRIVER,
-                              options=chrome_options)
+    prefs = {"download.default_directory": "/root/userbot/.bin"}
+    chrome_options.add_experimental_option("prefs", prefs)
+    driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
     driver.get(url)
     await e.edit("`Processing..\n50%`")
-    download_path = '/root/userbot/.bin'
+    download_path = "/root/userbot/.bin"
     driver.command_executor._commands["send_command"] = (
-        "POST", '/session/$sessionId/chromium/send_command')
+        "POST",
+        "/session/$sessionId/chromium/send_command",
+    )
     params = {
-        'cmd': 'Page.setDownloadBehavior',
-        'params': {
-            'behavior': 'allow',
-            'downloadPath': download_path
-        }
+        "cmd": "Page.setDownloadBehavior",
+        "params": {"behavior": "allow", "downloadPath": download_path},
     }
-    command_result = driver.execute("send_command", params)
+    driver.execute("send_command", params)
     driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
-   # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
-   # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
+    # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
+    # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
     await e.edit("`Processing..\n75%`")
     # Waiting for downloading
     while not os.path.isfile("/root/userbot/.bin/carbon.png"):
         await sleep(0.5)
     await e.edit("`Processing..\n100%`")
-    file = '/root/userbot/.bin/carbon.png'
+    file = "/root/userbot/.bin/carbon.png"
     await e.edit("`Uploading..`")
     await e.client.send_file(
         e.chat_id,
@@ -122,12 +131,12 @@ async def carbon_api(e):
         reply_to=e.message.reply_to_msg_id,
     )
 
-    os.remove('/root/userbot/.bin/carbon.png')
+    os.remove("/root/userbot/.bin/carbon.png")
     driver.quit()
     # Removing carbon.png after uploading
     await e.delete()  # Deleting msg
-    
-    
+
+
 @register(outgoing=True, pattern="^.img (.*)")
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
@@ -147,14 +156,15 @@ async def img_sampler(event):
         "keywords": query,
         "limit": lim,
         "format": "jpg",
-        "no_directory": "no_directory"
+        "no_directory": "no_directory",
     }
 
     # passing the arguments to the function
     paths = response.download(arguments)
     lst = paths[0][query]
     await event.client.send_file(
-        await event.client.get_input_entity(event.chat_id), lst)
+        await event.client.get_input_entity(event.chat_id), lst
+    )
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
     await event.delete()
 
@@ -169,13 +179,15 @@ async def moni(event):
             currency_from = input_sgra[1].upper()
             currency_to = input_sgra[2].upper()
             request_url = "https://api.exchangeratesapi.io/latest?base={}".format(
-                currency_from)
+                currency_from
+            )
             current_response = get(request_url).json()
             if currency_to in current_response["rates"]:
                 current_rate = float(current_response["rates"][currency_to])
                 rebmun = round(number * current_rate, 2)
-                await event.edit("{} {} = {} {}".format(
-                    number, currency_from, rebmun, currency_to))
+                await event.edit(
+                    "{} {} = {} {}".format(number, currency_from, rebmun, currency_to)
+                )
             else:
                 await event.edit(
                     "`This seems to be some alien currency, which I can't convert right now.`"
@@ -210,9 +222,9 @@ async def gsearch(q_event):
             msg += f"[{title}]({link})\n`{desc}`\n\n"
         except IndexError:
             break
-    await q_event.edit("**Search Query:**\n`" + match + "`\n\n**Results:**\n" +
-                       msg,
-                       link_preview=False)
+    await q_event.edit(
+        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg, link_preview=False
+    )
 
     if BOTLOG:
         await q_event.client.send_message(
@@ -250,7 +262,8 @@ async def wiki(wiki_q):
     await wiki_q.edit("**Search:**\n`" + match + "`\n\n**Result:**\n" + result)
     if BOTLOG:
         await wiki_q.client.send_message(
-            BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully")
+            BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully"
+        )
 
 
 @register(outgoing=True, pattern="^.ud (.*)")
@@ -262,14 +275,18 @@ async def _(event):
     urban = asyncurban.UrbanDictionary()
     try:
         mean = await urban.get_word(word)
-        await event.edit("Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(mean.word, mean.definition, mean.example))
+        await event.edit(
+            "Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(
+                mean.word, mean.definition, mean.example
+            )
+        )
     except asyncurban.WordNotFoundError:
         await event.edit("No result found for **" + word + "**")
-        
+
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
-#async def _(event):
+    # async def _(event):
     if query.fwd_from:
         return
     input_str = query.pattern_match.group(1)
@@ -289,25 +306,27 @@ async def text_to_speech(query):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     required_file_name = TEMP_DOWNLOAD_DIRECTORY + "voice.ogg"
     try:
-        #https://github.com/SpEcHiDe/UniBorg/commit/17f8682d5d2df7f3921f50271b5b6722c80f4106
+        # https://github.com/SpEcHiDe/UniBorg/commit/17f8682d5d2df7f3921f50271b5b6722c80f4106
         tts = gTTS(text, lang=lan)
         tts.save(required_file_name)
         command_to_execute = [
             "ffmpeg",
             "-i",
-             required_file_name,
-             "-map",
-             "0:a",
-             "-codec:a",
-             "libopus",
-             "-b:a",
-             "100k",
-             "-vbr",
-             "on",
-             required_file_name + ".opus"
+            required_file_name,
+            "-map",
+            "0:a",
+            "-codec:a",
+            "libopus",
+            "-b:a",
+            "100k",
+            "-vbr",
+            "on",
+            required_file_name + ".opus",
         ]
         try:
-            t_response = subprocess.check_output(command_to_execute, stderr=subprocess.STDOUT)
+            t_response = subprocess.check_output(
+                command_to_execute, stderr=subprocess.STDOUT
+            )
         except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
             await query.edit(str(exc))
             # continue sending required_file_name
@@ -322,7 +341,7 @@ async def text_to_speech(query):
             # caption="Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms),
             reply_to=query.message.reply_to_msg_id,
             allow_cache=False,
-            voice_note=True
+            voice_note=True,
         )
         os.remove(required_file_name)
         await query.edit("Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms))
@@ -337,81 +356,93 @@ async def text_to_speech(query):
 async def imdb(e):
     try:
         movie_name = e.pattern_match.group(1)
-        remove_space = movie_name.split(' ')
-        final_name = '+'.join(remove_space)
-        page = get("https://www.imdb.com/find?ref_=nv_sr_fn&q=" + final_name +
-                   "&s=all")
-        lnk = str(page.status_code)
-        soup = BeautifulSoup(page.content, 'lxml')
+        remove_space = movie_name.split(" ")
+        final_name = "+".join(remove_space)
+        page = get("https://www.imdb.com/find?ref_=nv_sr_fn&q=" + final_name + "&s=all")
+        str(page.status_code)
+        soup = BeautifulSoup(page.content, "lxml")
         odds = soup.findAll("tr", "odd")
-        mov_title = odds[0].findNext('td').findNext('td').text
-        mov_link = "http://www.imdb.com/" + \
-            odds[0].findNext('td').findNext('td').a['href']
+        mov_title = odds[0].findNext("td").findNext("td").text
+        mov_link = (
+            "http://www.imdb.com/" + odds[0].findNext("td").findNext("td").a["href"]
+        )
         page1 = get(mov_link)
-        soup = BeautifulSoup(page1.content, 'lxml')
-        if soup.find('div', 'poster'):
-            poster = soup.find('div', 'poster').img['src']
+        soup = BeautifulSoup(page1.content, "lxml")
+        if soup.find("div", "poster"):
+            poster = soup.find("div", "poster").img["src"]
         else:
-            poster = ''
-        if soup.find('div', 'title_wrapper'):
-            pg = soup.find('div', 'title_wrapper').findNext('div').text
-            mov_details = re.sub(r'\s+', ' ', pg)
+            poster = ""
+        if soup.find("div", "title_wrapper"):
+            pg = soup.find("div", "title_wrapper").findNext("div").text
+            mov_details = re.sub(r"\s+", " ", pg)
         else:
-            mov_details = ''
-        credits = soup.findAll('div', 'credit_summary_item')
+            mov_details = ""
+        credits = soup.findAll("div", "credit_summary_item")
         if len(credits) == 1:
             director = credits[0].a.text
-            writer = 'Not available'
-            stars = 'Not available'
+            writer = "Not available"
+            stars = "Not available"
         elif len(credits) > 2:
             director = credits[0].a.text
             writer = credits[1].a.text
             actors = []
-            for x in credits[2].findAll('a'):
+            for x in credits[2].findAll("a"):
                 actors.append(x.text)
             actors.pop()
-            stars = actors[0] + ',' + actors[1] + ',' + actors[2]
+            stars = actors[0] + "," + actors[1] + "," + actors[2]
         else:
             director = credits[0].a.text
-            writer = 'Not available'
+            writer = "Not available"
             actors = []
-            for x in credits[1].findAll('a'):
+            for x in credits[1].findAll("a"):
                 actors.append(x.text)
             actors.pop()
-            stars = actors[0] + ',' + actors[1] + ',' + actors[2]
-        if soup.find('div', "inline canwrap"):
-            story_line = soup.find('div',
-                                   "inline canwrap").findAll('p')[0].text
+            stars = actors[0] + "," + actors[1] + "," + actors[2]
+        if soup.find("div", "inline canwrap"):
+            story_line = soup.find("div", "inline canwrap").findAll("p")[0].text
         else:
-            story_line = 'Not available'
-        info = soup.findAll('div', "txt-block")
+            story_line = "Not available"
+        info = soup.findAll("div", "txt-block")
         if info:
             mov_country = []
             mov_language = []
             for node in info:
-                a = node.findAll('a')
+                a = node.findAll("a")
                 for i in a:
-                    if "country_of_origin" in i['href']:
+                    if "country_of_origin" in i["href"]:
                         mov_country.append(i.text)
-                    elif "primary_language" in i['href']:
+                    elif "primary_language" in i["href"]:
                         mov_language.append(i.text)
-        if soup.findAll('div', "ratingValue"):
-            for r in soup.findAll('div', "ratingValue"):
-                mov_rating = r.strong['title']
+        if soup.findAll("div", "ratingValue"):
+            for r in soup.findAll("div", "ratingValue"):
+                mov_rating = r.strong["title"]
         else:
-            mov_rating = 'Not available'
-        await e.edit('<a href=' + poster + '>&#8203;</a>'
-                     '<b>Title : </b><code>' + mov_title + '</code>\n<code>' +
-                     mov_details + '</code>\n<b>Rating : </b><code>' +
-                     mov_rating + '</code>\n<b>Country : </b><code>' +
-                     mov_country[0] + '</code>\n<b>Language : </b><code>' +
-                     mov_language[0] + '</code>\n<b>Director : </b><code>' +
-                     director + '</code>\n<b>Writer : </b><code>' + writer +
-                     '</code>\n<b>Stars : </b><code>' + stars +
-                     '</code>\n<b>IMDB Url : </b>' + mov_link +
-                     '\n<b>Story Line : </b>' + story_line,
-                     link_preview=True,
-                     parse_mode='HTML')
+            mov_rating = "Not available"
+        await e.edit(
+            "<a href=" + poster + ">&#8203;</a>"
+            "<b>Title : </b><code>"
+            + mov_title
+            + "</code>\n<code>"
+            + mov_details
+            + "</code>\n<b>Rating : </b><code>"
+            + mov_rating
+            + "</code>\n<b>Country : </b><code>"
+            + mov_country[0]
+            + "</code>\n<b>Language : </b><code>"
+            + mov_language[0]
+            + "</code>\n<b>Director : </b><code>"
+            + director
+            + "</code>\n<b>Writer : </b><code>"
+            + writer
+            + "</code>\n<b>Stars : </b><code>"
+            + stars
+            + "</code>\n<b>IMDB Url : </b>"
+            + mov_link
+            + "\n<b>Story Line : </b>"
+            + story_line,
+            link_preview=True,
+            parse_mode="HTML",
+        )
     except IndexError:
         await e.edit("Plox enter **Valid movie name** kthx")
 
@@ -436,8 +467,8 @@ async def translateme(trans):
         await trans.edit("Invalid destination language.")
         return
 
-    source_lan = LANGUAGES[f'{reply_text.src.lower()}']
-    transl_lan = LANGUAGES[f'{reply_text.dest.lower()}']
+    source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
+    transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
     reply_text = f"From **{source_lan.title()}**\nTo **{transl_lan.title()}:**\n\n{reply_text.text}"
 
     await trans.edit(reply_text)
@@ -479,15 +510,15 @@ async def lang(value):
     await value.edit(f"`Language for {scraper} changed to {LANG.title()}.`")
     if BOTLOG:
         await value.client.send_message(
-            BOTLOG_CHATID,
-            f"`Language for {scraper} changed to {LANG.title()}.`")
+            BOTLOG_CHATID, f"`Language for {scraper} changed to {LANG.title()}.`"
+        )
 
 
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
     query = video_q.pattern_match.group(1)
-    result = ''
+    result = ""
 
     if not YOUTUBE_API_KEY:
         await video_q.edit(
@@ -510,25 +541,27 @@ async def yt_search(video_q):
     await video_q.edit(reply_text)
 
 
-async def youtube_search(query,
-                         order="relevance",
-                         token=None,
-                         location=None,
-                         location_radius=None):
+async def youtube_search(
+    query, order="relevance", token=None, location=None, location_radius=None
+):
     """ Do a YouTube search. """
-    youtube = build('youtube',
-                    'v3',
-                    developerKey=YOUTUBE_API_KEY,
-                    cache_discovery=False)
-    search_response = youtube.search().list(
-        q=query,
-        type="video",
-        pageToken=token,
-        order=order,
-        part="id,snippet",
-        maxResults=10,
-        location=location,
-        locationRadius=location_radius).execute()
+    youtube = build(
+        "youtube", "v3", developerKey=YOUTUBE_API_KEY, cache_discovery=False
+    )
+    search_response = (
+        youtube.search()
+        .list(
+            q=query,
+            type="video",
+            pageToken=token,
+            order=order,
+            part="id,snippet",
+            maxResults=10,
+            location=location,
+            locationRadius=location_radius,
+        )
+        .execute()
+    )
 
     videos = []
 
@@ -556,59 +589,41 @@ async def download_video(v_url):
 
     if type == "audio":
         opts = {
-            'format':
-            'bestaudio',
-            'addmetadata':
-            True,
-            'key':
-            'FFmpegMetadata',
-            'writethumbnail':
-            True,
-            'prefer_ffmpeg':
-            True,
-            'geo_bypass':
-            True,
-            'nocheckcertificate':
-            True,
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '320',
-            }],
-            'outtmpl':
-            '%(id)s.mp3',
-            'quiet':
-            True,
-            'logtostderr':
-            False
+            "format": "bestaudio",
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "writethumbnail": True,
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "postprocessors": [
+                {
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": "mp3",
+                    "preferredquality": "320",
+                }
+            ],
+            "outtmpl": "%(id)s.mp3",
+            "quiet": True,
+            "logtostderr": False,
         }
         video = False
         song = True
 
     elif type == "video":
         opts = {
-            'format':
-            'best',
-            'addmetadata':
-            True,
-            'key':
-            'FFmpegMetadata',
-            'prefer_ffmpeg':
-            True,
-            'geo_bypass':
-            True,
-            'nocheckcertificate':
-            True,
-            'postprocessors': [{
-                'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4'
-            }],
-            'outtmpl':
-            '%(id)s.mp4',
-            'logtostderr':
-            False,
-            'quiet':
-            True
+            "format": "best",
+            "addmetadata": True,
+            "key": "FFmpegMetadata",
+            "prefer_ffmpeg": True,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "postprocessors": [
+                {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
+            ],
+            "outtmpl": "%(id)s.mp4",
+            "logtostderr": False,
+            "quiet": True,
         }
         song = False
         video = True
@@ -648,86 +663,110 @@ async def download_video(v_url):
         return
     c_time = time.time()
     if song:
-        await v_url.edit(f"`Preparing to upload song:`\
+        await v_url.edit(
+            f"`Preparing to upload song:`\
         \n**{rip_data['title']}**\
-        \nby *{rip_data['uploader']}*")
+        \nby *{rip_data['uploader']}*"
+        )
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp3",
             supports_streaming=True,
             attributes=[
-                DocumentAttributeAudio(duration=int(rip_data['duration']),
-                                       title=str(rip_data['title']),
-                                       performer=str(rip_data['uploader']))
+                DocumentAttributeAudio(
+                    duration=int(rip_data["duration"]),
+                    title=str(rip_data["title"]),
+                    performer=str(rip_data["uploader"]),
+                )
             ],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{rip_data['title']}.mp3")))
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp3")
+            ),
+        )
         os.remove(f"{rip_data['id']}.mp3")
         await v_url.delete()
     elif video:
-        await v_url.edit(f"`Preparing to upload video:`\
+        await v_url.edit(
+            f"`Preparing to upload video:`\
         \n**{rip_data['title']}**\
-        \nby *{rip_data['uploader']}*")
+        \nby *{rip_data['uploader']}*"
+        )
         await v_url.client.send_file(
             v_url.chat_id,
             f"{rip_data['id']}.mp4",
             supports_streaming=True,
-            caption=rip_data['title'],
-            progress_callback=lambda d, t: asyncio.get_event_loop(
-            ).create_task(
-                progress(d, t, v_url, c_time, "Uploading..",
-                         f"{rip_data['title']}.mp4")))
+            caption=rip_data["title"],
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(d, t, v_url, c_time, "Uploading..", f"{rip_data['title']}.mp4")
+            ),
+        )
         os.remove(f"{rip_data['id']}.mp4")
         await v_url.delete()
 
 
 def deEmojify(inputString):
     """ Remove emojis and other non-safe characters from string """
-    return get_emoji_regexp().sub(u'', inputString)
+    return get_emoji_regexp().sub("", inputString)
 
 
-CMD_HELP.update({
-    'img':
-    '.img <search_query>\
-        \nUsage: Does an image search on Google and shows 5 images.'
-})
-CMD_HELP.update({
-    'currency':
-    '.currency <amount> <from> <to>\
-        \nUsage: Converts various currencies for you.'
-})
-CMD_HELP.update({
-    'carbon':
-    '.crb <text> [or reply]\
-        \nUsage: Beautify your code using carbon.now.sh\nUse .crblang <text> to set language for your code.'
-})
 CMD_HELP.update(
-    {'google': '.google <query>\
-        \nUsage: Does a search on Google.'})
+    {
+        "img": ".img <search_query>\
+        \nUsage: Does an image search on Google and shows 5 images."
+    }
+)
 CMD_HELP.update(
-    {'wiki': '.wiki <query>\
-        \nUsage: Does a search on Wikipedia.'})
+    {
+        "currency": ".currency <amount> <from> <to>\
+        \nUsage: Converts various currencies for you."
+    }
+)
 CMD_HELP.update(
-    {'ud': '.ud <query>\
-        \nUsage: Does a search on Urban Dictionary.'})
-CMD_HELP.update({
-    'tts':
-    '.tts <text> [or reply]\
-        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.)'
-})
-CMD_HELP.update({
-    'trt':
-    '.trt <text> [or reply]\
-        \nUsage: Translates text to the language which is set.\nUse .lang trt <language code> to set language for trt. (Default is English)'
-})
-CMD_HELP.update({'yt': '.yt <text>\
-        \nUsage: Does a YouTube search.'})
+    {
+        "carbon": ".crb <text> [or reply]\
+        \nUsage: Beautify your code using carbon.now.sh\nUse .crblang <text> to set language for your code."
+    }
+)
 CMD_HELP.update(
-    {"imdb": ".imdb <movie-name>\nShows movie info and other stuff."})
-CMD_HELP.update({
-    'rip':
-    '.ripaudio <url> or ripvideo <url>\
-        \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).'
-})
+    {
+        "google": ".google <query>\
+        \nUsage: Does a search on Google."
+    }
+)
+CMD_HELP.update(
+    {
+        "wiki": ".wiki <query>\
+        \nUsage: Does a search on Wikipedia."
+    }
+)
+CMD_HELP.update(
+    {
+        "ud": ".ud <query>\
+        \nUsage: Does a search on Urban Dictionary."
+    }
+)
+CMD_HELP.update(
+    {
+        "tts": ".tts <text> [or reply]\
+        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.)"
+    }
+)
+CMD_HELP.update(
+    {
+        "trt": ".trt <text> [or reply]\
+        \nUsage: Translates text to the language which is set.\nUse .lang trt <language code> to set language for trt. (Default is English)"
+    }
+)
+CMD_HELP.update(
+    {
+        "yt": ".yt <text>\
+        \nUsage: Does a YouTube search."
+    }
+)
+CMD_HELP.update({"imdb": ".imdb <movie-name>\nShows movie info and other stuff."})
+CMD_HELP.update(
+    {
+        "rip": ".ripaudio <url> or ripvideo <url>\
+        \nUsage: Download videos and songs from YouTube (and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html))."
+    }
+)

@@ -20,12 +20,12 @@ import logging
 import traceback
 from typing import Dict, List
 
-from telethon import events, TelegramClient
+from telethon import TelegramClient, events
 
+from .events import MessageEdited, NewMessage
 from .FastTelethon import download_file, upload_file
 from .parser import parse_arguments
 from .pluginManager import PluginManager
-from .events import MessageEdited, NewMessage
 
 LOGGER = logging.getLogger(__name__)
 no_info = "There is no help available for this command!"
@@ -41,6 +41,7 @@ class Command:
 
 class UserBotClient(TelegramClient):
     """UserBot client with additional attributes inheriting TelegramClient"""
+
     commandcategories: Dict[str, List[str]] = {}
     commands: Dict[str, Command] = {}
     config: configparser.ConfigParser = None
@@ -56,15 +57,17 @@ class UserBotClient(TelegramClient):
     running_processes: dict = {}
     version: int = 0
 
-    def onMessage(self: TelegramClient,
-                  builtin: bool = False,
-                  command: str or tuple = None,
-                  edited: bool = True,
-                  info: str = None,
-                  **kwargs) -> callable:
+    def onMessage(
+        self: TelegramClient,
+        builtin: bool = False,
+        command: str or tuple = None,
+        edited: bool = True,
+        info: str = None,
+        **kwargs
+    ) -> callable:
         """Method to register a function without the client"""
 
-        kwargs.setdefault('forwards', False)
+        kwargs.setdefault("forwards", False)
 
         def wrapper(func: callable) -> callable:
             events.register(NewMessage(**kwargs))(func)
@@ -83,26 +86,26 @@ class UserBotClient(TelegramClient):
                 else:
                     com = command
 
-                UBcommand = Command(func, handlers, info or func.__doc__
-                                    or no_info, builtin)
+                UBcommand = Command(
+                    func, handlers, info or func.__doc__ or no_info, builtin
+                )
                 category = category.lower()
                 self.commands.update({com: UBcommand})
                 update_dict(self.commandcategories, category, com)
                 if builtin:
-                    update_dict(self.commandcategories, 'builtin', com)
+                    update_dict(self.commandcategories, "builtin", com)
             return func
 
         return wrapper
 
     async def get_traceback(self, exc: Exception) -> str:
-        return ''.join(
-            traceback.format_exception(etype=type(exc),
-                                       value=exc,
-                                       tb=exc.__traceback__))
+        return "".join(
+            traceback.format_exception(etype=type(exc), value=exc, tb=exc.__traceback__)
+        )
 
     def _updateconfig(self) -> bool:
         """Update the config. Sync method to avoid issues."""
-        with open('config.ini', 'w+') as configfile:
+        with open("config.ini", "w+") as configfile:
             self.config.write(configfile)
         return True
 
@@ -118,7 +121,7 @@ class UserBotClient(TelegramClient):
 
 
 def update_dict(category: dict, name: str, command: str or list) -> None:
-    commands = command.split('/') if '/' in command else [command]
+    commands = command.split("/") if "/" in command else [command]
     for c in commands:
         category.setdefault(name, []).append(c)
 

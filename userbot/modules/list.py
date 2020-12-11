@@ -1,4 +1,4 @@
-#ported for OUB by Sahyam2019
+# ported for OUB by Sahyam2019
 
 import io
 import os
@@ -6,9 +6,8 @@ import os.path
 import time
 from os.path import exists, isdir
 
-from userbot import CMD_HELP
-from userbot.events import register
 from uniborg.util import humanbytes
+from userbot.events import register
 
 MAX_MESSAGE_SIZE_LIMIT = 4095
 
@@ -110,4 +109,3 @@ async def lst(event):
             await event.delete()
     else:
         await event.edit(msg)
-        

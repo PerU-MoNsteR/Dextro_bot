@@ -18,18 +18,17 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import asyncio
+import errno
+import json
+import multiprocessing
+import os
+import re
 from asyncio import create_subprocess_shell as asyncSubprocess
 from asyncio.subprocess import PIPE as asyncPIPE
-
-import asyncio
-import re
-import json
-import os
-import multiprocessing
-import errno
+from urllib.error import HTTPError
 
 from pySmartDL import SmartDL
-from urllib.error import HTTPError
 
 from userbot import CMD_HELP, LOGS
 from userbot.events import register
@@ -42,10 +41,11 @@ async def subprocess_run(cmd, megadl):
     exitCode = subproc.returncode
     if exitCode != 0:
         await megadl.edit(
-            '**An error was detected while running subprocess**\n'
-            f'```exit code: {exitCode}\n'
-            f'stdout: {stdout.decode().strip()}\n'
-            f'stderr: {stderr.decode().strip()}```')
+            "**An error was detected while running subprocess**\n"
+            f"```exit code: {exitCode}\n"
+            f"stdout: {stdout.decode().strip()}\n"
+            f"stderr: {stderr.decode().strip()}```"
+        )
         return exitCode
     return stdout, stderr
 
@@ -63,11 +63,11 @@ async def mega_downloader(megadl):
         await megadl.edit("Usage: `.mega <mega url>`")
         return
     try:
-        link = re.findall(r'\bhttps?://.*mega.*\.nz\S+', link)[0]
+        link = re.findall(r"\bhttps?://.*mega.*\.nz\S+", link)[0]
     except IndexError:
         await megadl.edit("`No MEGA.nz link found`\n")
         return
-    cmd = f'bin/megadown -q -m {link}'
+    cmd = f"bin/megadown -q -m {link}"
     result = await subprocess_run(cmd, megadl)
     try:
         data = json.loads(result[0].decode().strip())
@@ -84,8 +84,7 @@ async def mega_downloader(megadl):
     hex_raw_key = data["hex_raw_key"]
     temp_file_name = file_name + ".temp"
     downloaded_file_name = "./" + "" + temp_file_name
-    downloader = SmartDL(
-        file_url, downloaded_file_name, progress_bar=False)
+    downloader = SmartDL(file_url, downloaded_file_name, progress_bar=False)
     display_message = None
     try:
         downloader.start(blocking=False)
@@ -122,17 +121,23 @@ async def mega_downloader(megadl):
     if downloader.isSuccessful():
         download_time = downloader.get_dl_time(human=True)
         try:
-            P = multiprocessing.Process(target=await decrypt_file(
-                file_name, temp_file_name, hex_key, hex_raw_key, megadl), name="Decrypt_File")
+            P = multiprocessing.Process(
+                target=await decrypt_file(
+                    file_name, temp_file_name, hex_key, hex_raw_key, megadl
+                ),
+                name="Decrypt_File",
+            )
             P.start()
             P.join()
         except FileNotFoundError as e:
             await megadl.edit(str(e))
             return
         else:
-            await megadl.edit(f"`{file_name}`\n\n"
-                              "Successfully downloaded\n"
-                              f"Download took: {download_time}")
+            await megadl.edit(
+                f"`{file_name}`\n\n"
+                "Successfully downloaded\n"
+                f"Download took: {download_time}"
+            )
     else:
         await megadl.edit("Failed to download, check heroku Log for details")
         for e in downloader.get_errors():
@@ -140,22 +145,22 @@ async def mega_downloader(megadl):
     return
 
 
-async def decrypt_file(file_name, temp_file_name,
-                       hex_key, hex_raw_key, megadl):
-    cmd = ("cat '{}' | openssl enc -d -aes-128-ctr -K {} -iv {} > '{}'"
-           .format(temp_file_name, hex_key, hex_raw_key, file_name))
+async def decrypt_file(file_name, temp_file_name, hex_key, hex_raw_key, megadl):
+    cmd = "cat '{}' | openssl enc -d -aes-128-ctr -K {} -iv {} > '{}'".format(
+        temp_file_name, hex_key, hex_raw_key, file_name
+    )
     if await subprocess_run(cmd, megadl):
         os.remove(temp_file_name)
     else:
-        raise FileNotFoundError(
-            errno.ENOENT, os.strerror(errno.ENOENT), file_name)
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), file_name)
     return
 
 
-CMD_HELP.update({
-    "mega":
-    ".mega <mega url>\n"
-    "Usage: Reply to a mega link or paste your mega link to\n"
-    "download the file into your userbot server\n\n"
-    "Only support for *FILE* only."
-})
+CMD_HELP.update(
+    {
+        "mega": ".mega <mega url>\n"
+        "Usage: Reply to a mega link or paste your mega link to\n"
+        "download the file into your userbot server\n\n"
+        "Only support for *FILE* only."
+    }
+)

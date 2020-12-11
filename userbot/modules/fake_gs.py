@@ -6,11 +6,13 @@
 
 import asyncio
 import os
+
 from PIL import Image, ImageDraw, ImageFont
 from wget import download
 
 from userbot import CMD_HELP
 from userbot.events import register
+
 
 @register(outgoing=True, pattern="^.fgs ((.*) ; (.*))")
 async def FakeGoogleSearch(event):
@@ -21,20 +23,20 @@ async def FakeGoogleSearch(event):
         return
     if ";" in input_str:
         search, result = input_str.split(";", 1)
-    else: 
+    else:
         await event.edit("Invalid Input! Check help for more info!", del_in=5)
         return
-      
-    await event.edit('Connecting to `https://www.google.com/` ...')
+
+    await event.edit("Connecting to `https://www.google.com/` ...")
     await asyncio.sleep(2)
-    img='https://i.imgur.com/wNFr5X2.jpg'
-    r=download(img)
-    photo=Image.open(r)
-    drawing=ImageDraw.Draw(photo)
-    blue=(0,0,255)
-    black=(0,0,0)
-    font1=ImageFont.truetype("fonts/ProductSans-BoldItalic.ttf",23)
-    font2=ImageFont.truetype("fonts/ProductSans-Light.ttf",23)
+    img = "https://i.imgur.com/wNFr5X2.jpg"
+    r = download(img)
+    photo = Image.open(r)
+    drawing = ImageDraw.Draw(photo)
+    blue = (0, 0, 255)
+    black = (0, 0, 0)
+    font1 = ImageFont.truetype("fonts/ProductSans-BoldItalic.ttf", 23)
+    font2 = ImageFont.truetype("fonts/ProductSans-Light.ttf", 23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
     photo.save("downloads/test.jpg")
@@ -42,15 +44,14 @@ async def FakeGoogleSearch(event):
     await event.delete()
     reply_id = event.pattern_match.group(3) if reply else None
     await event.client.send_file(
-        event.chat_id,
-        'downloads/test.jpg',
-        reply_to_message_id=reply_id)
-    os.remove('downloads/test.jpg')
-    
+        event.chat_id, "downloads/test.jpg", reply_to_message_id=reply_id
+    )
+    os.remove("downloads/test.jpg")
+
     CMD_HELP.update(
-    {
-        "fake_google_search": "`.fgs`\n"
-        "Usage: Get a user-customised google search meme!\n\n"
-        "`.fgs [UpperText] ; [LowerText]`\n"
-    }
-)
+        {
+            "fake_google_search": "`.fgs`\n"
+            "Usage: Get a user-customised google search meme!\n\n"
+            "`.fgs [UpperText] ; [LowerText]`\n"
+        }
+    )

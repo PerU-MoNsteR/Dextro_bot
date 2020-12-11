@@ -3,9 +3,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # thanks to penn5 for bug fixing
 
-import re
 import math
 import os
+import re
 import time
 
 from telethon import events
@@ -28,16 +28,16 @@ def admin_cmd(pattern=None, allow_sudo=False, **args):
             args["pattern"] = re.compile(pattern)
         else:
             args["pattern"] = re.compile(Config.COMMAND_HAND_LER + pattern)
-            
+
         args["func"] = lambda e: e.via_bot_id is None
-        
+
         args["outgoing"] = True
     # should this command be available for other users?
     if allow_sudo:
         args["from_users"] = list(Config.SUDO_USERS)
         # Mutually exclusive with outgoing (can only set one of either).
         args["incoming"] = True
-        
+
     # error handling condition check
     elif "incoming" in args and not args["incoming"]:
         args["outgoing"] = True
@@ -49,13 +49,11 @@ def admin_cmd(pattern=None, allow_sudo=False, **args):
         args["chats"] = black_list_chats
 
     # check if the plugin should allow edited updates
-    allow_edited_updates = False
     if "allow_edited_updates" in args and args["allow_edited_updates"]:
-        allow_edited_updates = args["allow_edited_updates"]
+        args["allow_edited_updates"]
         del args["allow_edited_updates"]
 
     # check if the plugin should listen for outgoing 'messages'
-    is_message_enabled = True
 
     return events.NewMessage(**args)
 
@@ -67,8 +65,7 @@ async def is_read(borg, entity, message, is_out=None):
     """
     is_out = getattr(message, "out", is_out)
     if not isinstance(is_out, bool):
-        raise ValueError(
-            "Message was id but is_out not provided or not a bool")
+        raise ValueError("Message was id but is_out not provided or not a bool")
     message_id = getattr(message, "id", message)
     if not isinstance(message_id, int):
         raise ValueError("Failed to extract id from message")
@@ -90,19 +87,14 @@ async def progress(current, total, event, start, type_of_ps):
         time_to_completion = round((total - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "{0}{1}\nPercent: {2}%\n".format(
-            ''.join(["▰" for i in range(math.floor(percentage / 5))]),
-            ''.join(["▱" for i in range(20 - math.floor(percentage / 5))]),
-            round(percentage, 2))
-        tmp = progress_str + \
-            "{0} of {1}\nETA: {2}".format(
-                humanbytes(current),
-                humanbytes(total),
-                time_formatter(estimated_total_time)
-            )
-        await event.edit("{}\n {}".format(
-            type_of_ps,
-            tmp
-        ))
+            "".join(["▰" for i in range(math.floor(percentage / 5))]),
+            "".join(["▱" for i in range(20 - math.floor(percentage / 5))]),
+            round(percentage, 2),
+        )
+        tmp = progress_str + "{0} of {1}\nETA: {2}".format(
+            humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
+        )
+        await event.edit("{}\n {}".format(type_of_ps, tmp))
 
 
 def humanbytes(size):
@@ -114,13 +106,7 @@ def humanbytes(size):
     # 2 ** 10 = 1024
     power = 2 ** 10
     raised_to_pow = 0
-    dict_power_n = {
-        0: "",
-        1: "Ki",
-        2: "Mi",
-        3: "Gi",
-        4: "Ti"
-    }
+    dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
     while size > power:
         size /= power
         raised_to_pow += 1
@@ -134,9 +120,11 @@ def time_formatter(milliseconds: int) -> str:
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
-    tmp = ((str(days) + "d, ") if days else "") + \
-        ((str(hours) + "h, ") if hours else "") + \
-        ((str(minutes) + "m, ") if minutes else "") + \
-        ((str(seconds) + "s, ") if seconds else "") + \
-        ((str(milliseconds) + "ms, ") if milliseconds else "")
+    tmp = (
+        ((str(days) + "d, ") if days else "")
+        + ((str(hours) + "h, ") if hours else "")
+        + ((str(minutes) + "m, ") if minutes else "")
+        + ((str(seconds) + "s, ") if seconds else "")
+        + ((str(milliseconds) + "ms, ") if milliseconds else "")
+    )
     return tmp[:-2]

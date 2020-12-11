@@ -21,6 +21,7 @@ from typing import Tuple, Union
 
 class UnknownFlagError(Exception):
     """Used to raise an Exception for an unknown flag."""
+
     def __init__(self, flag):
         super().__init__(flag)
         self.flag = flag
@@ -41,10 +42,10 @@ async def match_splitter(match: re.Match) -> Tuple[str, str, str, str]:
     """
     li = match.group(1)
     fr = match.group(3)
-    to = match.group(4) if match.group(4) else ''
-    to = re.sub(r'\\/', '/', to)
-    to = re.sub(r'(?<!\\)\\0', r'\g<0>', to)
-    fl = match.group(5) if match.group(5) else ''
+    to = match.group(4) if match.group(4) else ""
+    to = re.sub(r"\\/", "/", to)
+    to = re.sub(r"(?<!\\)\\0", r"\g<0>", to)
+    fl = match.group(5) if match.group(5) else ""
 
     return li, fr, to, fl
 
@@ -69,21 +70,21 @@ async def resolve_flags(fl: str) -> Tuple[int, Union[int, Enum]]:
     flags = 0
 
     for f in fl.lower():
-        if f == 'a':
+        if f == "a":
             flags |= re.ASCII
-        elif f == 'i':
+        elif f == "i":
             flags |= re.IGNORECASE
-        elif f == 'l':
+        elif f == "l":
             flags |= re.LOCALE
-        elif f == 'm':
+        elif f == "m":
             flags |= re.MULTILINE
-        elif f == 's':
+        elif f == "s":
             flags |= re.DOTALL
-        elif f == 'u':
+        elif f == "u":
             flags |= re.UNICODE
-        elif f == 'x':
+        elif f == "x":
             flags |= re.VERBOSE
-        elif f == 'g':
+        elif f == "g":
             count = 0
         else:
             raise UnknownFlagError(f)
@@ -91,12 +92,14 @@ async def resolve_flags(fl: str) -> Tuple[int, Union[int, Enum]]:
     return count, flags
 
 
-async def substitute(fr: str,
-                     to: str,
-                     original: str,
-                     line: (str, int, None) = None,
-                     count: int = 1,
-                     flags: Union[Enum, int] = 0) -> Union[str, None]:
+async def substitute(
+    fr: str,
+    to: str,
+    original: str,
+    line: (str, int, None) = None,
+    count: int = 1,
+    flags: Union[Enum, int] = 0,
+) -> Union[str, None]:
     """Substitute a (specific) string.
     Match the regular-expression against the content of the pattern space.
     If found, replace matched string with replacement.
@@ -127,7 +130,7 @@ async def substitute(fr: str,
         newLine, i = re.subn(fr, to, lines[line - 1], count=count, flags=flags)
         if i > 0:
             lines[line - 1] = newLine
-            newStr = '\n'.join(lines)
+            newStr = "\n".join(lines)
             return newStr
     else:
         s, i = re.subn(fr, to, original, count=count, flags=flags)
@@ -161,12 +164,7 @@ async def sub_matches(matches: list, original: str) -> Union[str, None]:
             exc = f"`Unknown flag:` `{f}`"
             return exc
 
-        newStr = await substitute(fr,
-                                  to,
-                                  string,
-                                  line=line,
-                                  count=count,
-                                  flags=flags)
+        newStr = await substitute(fr, to, string, line=line, count=count, flags=flags)
         if newStr:
             string = newStr
             total_subs += 1

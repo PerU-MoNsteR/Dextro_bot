@@ -1,17 +1,17 @@
 import aiohttp
-from userbot.events import register
+
 from userbot import CMD_HELP
+from userbot.events import register
 
 
 @register(pattern=r".git (.*)", outgoing=True)
 async def github(event):
     URL = f"https://api.github.com/users/{event.pattern_match.group(1)}"
-    chat = await event.get_chat()
+    await event.get_chat()
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                await event.reply("`" + event.pattern_match.group(1) +
-                                  " not found`")
+                await event.reply("`" + event.pattern_match.group(1) + " not found`")
                 return
 
             result = await request.json()

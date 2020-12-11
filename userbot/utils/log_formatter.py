@@ -17,20 +17,21 @@
 import logging
 import os
 
-HEROKU = os.environ.get('DYNO', False)
-CCRI = '\033[48;5;124m' if not HEROKU else ''
-CERR = '\033[38;5;124m' if not HEROKU else ''
-CWAR = '\033[38;5;202m' if not HEROKU else ''
-CINF = '\033[38;5;15m' if not HEROKU else ''
-CDEB = '\033[38;5;28m' if not HEROKU else ''
-CEND = '\033[0m' if not HEROKU else ''
-CORA = '\033[33;1m' if not HEROKU else ''
-CBOT = '\033[94;1m' if not HEROKU else ''
-CUSR = '\033[38;5;118m' if not HEROKU else ''
+HEROKU = os.environ.get("DYNO", False)
+CCRI = "\033[48;5;124m" if not HEROKU else ""
+CERR = "\033[38;5;124m" if not HEROKU else ""
+CWAR = "\033[38;5;202m" if not HEROKU else ""
+CINF = "\033[38;5;15m" if not HEROKU else ""
+CDEB = "\033[38;5;28m" if not HEROKU else ""
+CEND = "\033[0m" if not HEROKU else ""
+CORA = "\033[33;1m" if not HEROKU else ""
+CBOT = "\033[94;1m" if not HEROKU else ""
+CUSR = "\033[38;5;118m" if not HEROKU else ""
 
 
 class CustomPercentStyle(logging.PercentStyle):
     """Replace the default_format to our own and override the format method."""
+
     default_format = "[%(levelname)s / %(asctime)s] %(name)s: %(message)s"
 
     def format(self, record):
@@ -42,9 +43,9 @@ class CustomPercentStyle(logging.PercentStyle):
             else:
                 first = "[%(asctime)s / %(levelname)s] "
 
-            if record.name.startswith('telethon'):
+            if record.name.startswith("telethon"):
                 second = f"{CBOT}%(name)s:{CEND} %(message)s"
-            elif record.name.startswith('userbot'):
+            elif record.name.startswith("userbot"):
                 second = f"{CORA}%(name)s:{CEND} %(message)s"
             else:
                 second = "%(name)s: %(message)s"
@@ -55,9 +56,9 @@ class CustomPercentStyle(logging.PercentStyle):
                 logging.WARNING: CWAR + first + CEND + second,
                 logging.INFO: CINF + first + CEND + second,
                 logging.DEBUG: CDEB + first + CEND + second,
-                'DEFAULT': self.default_format
+                "DEFAULT": self.default_format,
             }
-            fmt = FORMATS.get(record.levelno, FORMATS['DEFAULT'])
+            fmt = FORMATS.get(record.levelno, FORMATS["DEFAULT"])
         else:
             fmt = self._fmt
         return fmt % record.__dict__
@@ -65,5 +66,5 @@ class CustomPercentStyle(logging.PercentStyle):
 
 class CustomFormatter(logging.Formatter):
     """Update the default Formatter's _STYLES dict to use our custom one"""
-    _STYLES = logging._STYLES.update(
-        {'%': (CustomPercentStyle, logging.BASIC_FORMAT)})
+
+    _STYLES = logging._STYLES.update({"%": (CustomPercentStyle, logging.BASIC_FORMAT)})

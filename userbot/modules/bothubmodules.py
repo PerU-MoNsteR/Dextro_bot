@@ -2,10 +2,11 @@
 """
 
 import re
-from telethon import custom
-from userbot.events import register
-from userbot import CMD_HELP, BOT_TOKEN, PRIVATE_CHANNEL_BOT_API_ID, bot
 
+from telethon import custom
+
+from userbot import BOT_TOKEN, PRIVATE_CHANNEL_BOT_API_ID, bot
+from userbot.events import register
 
 # regex obtained from: https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/helper_funcs/string_handling.py#L23
 BTN_URL_REGEX = re.compile(r"(\{([^\[]+?)\}\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
@@ -18,7 +19,9 @@ async def _(event):
         return
 
     if PRIVATE_CHANNEL_BOT_API_ID is None:
-        await event.edit("need to have a `PRIVATE_CHANNEL_BOT_API_ID` for this module to work")
+        await event.edit(
+            "need to have a `PRIVATE_CHANNEL_BOT_API_ID` for this module to work"
+        )
         return
 
     reply_message = await event.get_reply_message()
@@ -42,7 +45,7 @@ async def _(event):
         if n_escapes % 2 == 0:
             # create a thruple with button label, url, and newline status
             buttons.append((match.group(2), match.group(3), bool(match.group(4))))
-            note_data += markdown_note[prev:match.start(1)]
+            note_data += markdown_note[prev : match.start(1)]
             prev = match.end(1)
 
         # if odd, escaped -> move along
@@ -62,8 +65,7 @@ async def _(event):
     if reply_message.media is not None:
         message_id_in_channel = reply_message.id
         tgbot_reply_message = await bot.get_messages(
-            entity=PRIVATE_CHANNEL_BOT_API_ID,
-            ids=message_id_in_channel
+            entity=PRIVATE_CHANNEL_BOT_API_ID, ids=message_id_in_channel
         )
         tgbot_reply_message = tgbot_reply_message.media
 
@@ -74,11 +76,12 @@ async def _(event):
         file=tgbot_reply_message,
         link_preview=False,
         buttons=tl_ib_buttons,
-        silent=True
+        silent=True,
     )
 
 
 # Helpers
+
 
 def build_keyboard(buttons):
     keyb = []

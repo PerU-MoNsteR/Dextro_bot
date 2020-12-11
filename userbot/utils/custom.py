@@ -21,46 +21,63 @@ import logging
 from typing import Sequence, Tuple, Union
 
 from telethon import errors
-from telethon.extensions import markdown, html
+from telethon.extensions import html, markdown
 from telethon.tl import custom, functions, types
 
 LOGGER = logging.getLogger(__name__)
 MAXLIM: int = 4096
-file_kwargs: Tuple = ('file', 'caption', 'force_document', 'clear_draft',
-                      'progress_callback', 'reply_to', 'attributes', 'thumb',
-                      'allow_cache', 'voice_note', 'video_note', 'buttons',
-                      'supports_streaming')
+file_kwargs: Tuple = (
+    "file",
+    "caption",
+    "force_document",
+    "clear_draft",
+    "progress_callback",
+    "reply_to",
+    "attributes",
+    "thumb",
+    "allow_cache",
+    "voice_note",
+    "video_note",
+    "buttons",
+    "supports_streaming",
+)
 
 
-async def answer(self,
-                 *args,
-                 log: str or Tuple[str, str] = None,
-                 reply: bool = False,
-                 self_destruct: int = None,
-                 **kwargs) -> Union[custom.Message, Sequence[custom.Message]]:
+async def answer(
+    self,
+    *args,
+    log: str or Tuple[str, str] = None,
+    reply: bool = False,
+    self_destruct: int = None,
+    **kwargs,
+) -> Union[custom.Message, Sequence[custom.Message]]:
     """Custom bound method for the Message object"""
     message_out = None
     start_date = datetime.datetime.now(datetime.timezone.utc)
-    message = await self.client.get_messages(await self.get_input_chat(),
-                                             ids=self.id)
+    message = await self.client.get_messages(await self.get_input_chat(), ids=self.id)
     reply_to = self.reply_to_msg_id or self.id
-    if kwargs.setdefault('parse_mode', 'md') in ['html', 'HTML']:
+    if kwargs.setdefault("parse_mode", "md") in ["html", "HTML"]:
         parser = html
     else:
         parser = markdown
 
     is_media = any([k for k in file_kwargs if kwargs.get(k, False)])
     if len(args) == 1 and isinstance(args[0], str) and not is_media:
-        is_reply = reply or kwargs.get('reply_to', False)
+        is_reply = reply or kwargs.get("reply_to", False)
         text = args[0]
         msg, msg_entities = parser.parse(text)
         if len(msg) <= MAXLIM:
-            if (not (message and message.out) or is_reply or self.fwd_from or
-                (self.media
-                 and not isinstance(self.media, types.MessageMediaWebPage))):
-                kwargs.setdefault('reply_to', reply_to)
+            if (
+                not (message and message.out)
+                or is_reply
+                or self.fwd_from
+                or (
+                    self.media and not isinstance(self.media, types.MessageMediaWebPage)
+                )
+            ):
+                kwargs.setdefault("reply_to", reply_to)
                 try:
-                    kwargs.setdefault('silent', True)
+                    kwargs.setdefault("silent", True)
                     message_out = await self.respond(text, **kwargs)
                 except Exception as e:
                     raise e
@@ -78,7 +95,7 @@ async def answer(self,
                     message_out.append(first_msg)
                     for t in chunks[1:]:
                         try:
-                            kwargs.setdefault('silent', True)
+                            kwargs.setdefault("silent", True)
                             sent = await self.respond(t, **kwargs)
                             message_out.append(sent)
                         except Exception as e:
@@ -91,8 +108,7 @@ async def answer(self,
                     except Exception as e:
                         raise e
         else:
-            if (message and message.out
-                    and not (message.fwd_from or message.media)):
+            if message and message.out and not (message.fwd_from or message.media):
                 try:
                     await self.edit("`Output exceeded the limit.`")
                 except errors.rpcerrorlist.MessageIdInvalidError:
@@ -100,20 +116,20 @@ async def answer(self,
                 except Exception as e:
                     raise e
 
-            kwargs.setdefault('reply_to', reply_to)
+            kwargs.setdefault("reply_to", reply_to)
             output = io.BytesIO(msg.strip().encode())
             output.name = "output.txt"
             try:
-                kwargs.setdefault('silent', True)
+                kwargs.setdefault("silent", True)
                 message_out = await self.respond(file=output, **kwargs)
                 output.close()
             except Exception as e:
                 output.close()
                 raise e
     else:
-        kwargs.setdefault('reply_to', reply_to)
+        kwargs.setdefault("reply_to", reply_to)
         try:
-            kwargs.setdefault('silent', True)
+            kwargs.setdefault("silent", True)
             message_out = await self.respond(*args, **kwargs)
         except Exception as e:
             raise e
@@ -124,8 +140,9 @@ async def answer(self,
                 message.date = start_date
         else:
             message_out.date = start_date
-    if (self_destruct and self.client.config['userbot'].getboolean(
-            'self_destruct_msg', True)):
+    if self_destruct and self.client.config["userbot"].getboolean(
+        "self_destruct_msg", True
+    ):
         asyncio.create_task(_self_destructor(message_out, self_destruct))
 
     if log:
@@ -137,8 +154,9 @@ async def answer(self,
         else:
             text = f"**USERBOT LOG** `Executed command:` #{log}"
         if self.client.logger:
-            logger_group = self.client.config['userbot'].getint(
-                'logger_group_id', False)
+            logger_group = self.client.config["userbot"].getint(
+                "logger_group_id", False
+            )
             entity = False
             try:
                 entity = await self.client.get_input_entity(logger_group)
@@ -151,7 +169,8 @@ async def answer(self,
 
             if entity:
                 message, msg_entities = await self.client._parse_message_text(
-                    text, kwargs.get('parse_mode'))
+                    text, kwargs.get("parse_mode")
+                )
                 if len(message) <= MAXLIM and len(msg_entities) < 100:
                     messages = [(message, msg_entities)]
                 else:
@@ -164,7 +183,9 @@ async def answer(self,
                                 message=text,
                                 no_webpage=True,
                                 silent=True,
-                                entities=entities))
+                                entities=entities,
+                            )
+                        )
                         await asyncio.sleep(2)
                     except Exception as e:
                         print("Report this error to the support group.")
@@ -178,8 +199,10 @@ async def _resolve_entities(message: str, entities: list) -> dict:
     while entities:
         end = 100 if len(entities) >= 100 else len(entities)
         if len(message) > MAXLIM:
-            end, _ = min(enumerate(entities[:end]),
-                         key=lambda x: abs(x[1].offset + x[1].length - MAXLIM))
+            end, _ = min(
+                enumerate(entities[:end]),
+                key=lambda x: abs(x[1].offset + x[1].length - MAXLIM),
+            )
             if end == 0:
                 msg_end = entities[0].offset + entities[0].length
                 if msg_end > MAXLIM:
@@ -203,10 +226,10 @@ async def _resolve_entities(message: str, entities: list) -> dict:
         _, last_chunk = await _next_offset(end, entities)
         if not last_chunk:
             last_end = entities[end + 1].offset + entities[end + 1].length
-            if end > 3 and not message[last_end:].startswith('\n'):
+            if end > 3 and not message[last_end:].startswith("\n"):
                 for e in entities[:end:-1]:
                     start = e.offset + e.length
-                    if end == 2 or message[start:].startswith('\n'):
+                    if end == 2 or message[start:].startswith("\n"):
                         break
                     end = end - 1
         e_chunk = entities[:end]
@@ -218,7 +241,7 @@ async def _resolve_entities(message: str, entities: list) -> dict:
         t_chunk = message[:msg_end]
         messages.append((t_chunk, e_chunk))
         entities = entities[end:]
-        message = message[len(t_chunk):]
+        message = message[len(t_chunk) :]
         if entities:
             await _reset_entities(entities, msg_end, next_offset)
     return messages
@@ -245,8 +268,7 @@ async def _next_offset(end, entities) -> Tuple[int, bool]:
 
 
 async def _self_destructor(
-    event: Union[custom.Message,
-                 Sequence[custom.Message]], timeout: int or float
+    event: Union[custom.Message, Sequence[custom.Message]], timeout: int or float
 ) -> Union[custom.Message, Sequence[custom.Message]]:
     await asyncio.sleep(timeout)
     if isinstance(event, list):

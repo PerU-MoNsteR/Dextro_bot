@@ -9,13 +9,15 @@ from importlib import import_module
 from sys import argv
 
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
+
 from userbot import LOGS, bot
 from userbot.modules import ALL_MODULES
 
-
-INVALID_PH = '\nERROR: The Phone No. entered is INVALID' \
-             '\n Tip: Use Country Code along with number.' \
-             '\n or check your phone number and try again !'
+INVALID_PH = (
+    "\nERROR: The Phone No. entered is INVALID"
+    "\n Tip: Use Country Code along with number."
+    "\n or check your phone number and try again !"
+)
 
 try:
     bot.start()
@@ -31,7 +33,8 @@ LOGS.info("You are running Dextro_bot [v7.7.7]")
 LOGS.info(
     "😘 Congratulations, your userbot is now running !! Test it by typing .ping in any chat 😘."
     "Once died 😵, but now ON again 😉, A BIG thanks to https://github.com/Devp73 Dev Patel who have helped make this userbot ON AGAIN with his HUGE FIX!!"
-    "for command list type .help & If you need assistance, head to https://t.me/PPE_Support")
+    "for command list type .help & If you need assistance, head to https://t.me/PPE_Support"
+)
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
