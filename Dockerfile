@@ -74,7 +74,7 @@ RUN python3 -m ensurepip \
 # Clone repo and prepare working directory
 #
 
-RUN git clone -b sql-extended https://github.com/mkaraniya/Dextro_bot /root/userbot
+RUN git clone -b sql-extended https://github.com/PerU-MoNsteR/Dextro_bot /root/userbot
 RUN mkdir /root/userbot/.bin
 WORKDIR /root/userbot/
 ENV PATH="/root/userbot/.bin:$PATH"

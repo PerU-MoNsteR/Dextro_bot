@@ -45,7 +45,7 @@ tg_senderror() {
     fi
     tg_sendinfo "<code>Build Throwing Error(s)</code>" \
         "${REVIEWERS} please look in!" \
-        "Logs: https://github.com/mkaraniya/Dextro_bot"
+        "Logs: https://github.com/PerU-MoNsteR/Dextro_bot"
 
     [ -n "${STATUS}" ] &&
     exit "${STATUS}" ||
